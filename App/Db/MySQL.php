@@ -22,32 +22,27 @@ class MySQL
     }
 
     private function connect() {
-        if ($this->connect) {
-            return;
-        }
 
+        if (!$this->connect) {
 
-        //
-
-        $this->connect = mysqli_connect($this->host, $this->username, $this->password, $this->db_name);
+            $this->connect = mysqli_connect($this->host, $this->username, $this->password, $this->db_name);
 
 //        $mysql_errno = mysqli_connect_errno();
-
 //        if ($mysql_errno > 0) {
-        if(!$this->connect) {
-            die('MySQL connect error: (' . mysqli_connect_errno() . ') ' . mysqli_connect_error());
+
+            if (!$this->connect) {
+                die('MySQL connect error: (' . mysqli_connect_errno() . ') ' . mysqli_connect_error());
+            }
+            mysqli_set_charset($this->connect, 'utf8');
         }
 
-        mysqli_set_charset($this->connect, 'utf8');
+        return $this->connect;
     }
 
     public function query($query) {
-        $this->connect();
 
-        $result = mysqli_query($this->connect, $query);
-
+        $result = mysqli_query($this->connect(), $query);
         $this->checkErrors($result);
-
         return $result;
     }
 
@@ -55,10 +50,9 @@ class MySQL
 //        $this->connect(); ???
 
         if(!$mysqli_query) {
-
-            $message = 'MySQL query error: (' . mysqli_errno($this->connect) . ') ' . mysqli_error($this->connect);
+            // зачем создавать соединение, если в запросе есть создание
+            $message = 'MySQL query error: (' . mysqli_errno($this->connect . ') ' . mysqli_error($this->connect));
             throw new \Exception($message);
-
         }
     }
 
@@ -104,7 +98,7 @@ class MySQL
 
         if ($class_exist) {
             $model_class = IModel::class;
-            $cap_object = new $class_name; //? можно проверять без объекта по названию класса
+            //$cap_object = new $class_name; //? можно проверять без объекта по названию класса
             $is_model = in_array($model_class, class_implements($class_name));
 
             if (!$is_model) {
@@ -113,6 +107,77 @@ class MySQL
         } else {
             throw new \Exception("Class '{$class_name}' not exist");
         }
+    }
+
+    public function insert(string $table_name, array $value) {
+        $table_name = $this->escape($table_name);
+
+        $columns = array_keys($value);
+        $columns = array_map(function ($item) {
+            return $this->escape($item);
+        }, $columns);
+
+        $columns = implode(',', $columns);
+
+        $values = array_map(function ($item) {
+            return $this->escape($item);
+        } ,$value);
+
+        $values = '\'' . implode('\',\'', $values) . '\'';
+
+        $query = "INSERT INTO $table_name($columns) VALUES ($values)";
+        $this->query($query);
+
+        return mysqli_insert_id($this->connect);
+
+    }
+
+    public function update(string $table_name, array $values, array $where = []) {
+        $table_name = $this->escape($table_name);
+
+        $set_data = [];
+
+        foreach ($values as $key => $value) {
+            $set_data[] = $this->escape($key) . ' = \'' . $this.$this->escape($value) . '\'';
+
+        }
+            $set_data = implode(', ', $set_data);
+
+            $where_data = [];
+
+            foreach($where as $key => $value) {
+                $where_data[] = $this->escape($key) . ' = \'' . $this->escape($value) . '\'';
+            }
+            $query = "UPDATE $table_name SET $set_data";
+
+            if(!empty($where_data)) {
+                $where_data = implode(' AND ', $where_data);
+                $query .= ' WHERE ' . $where_data;
+            }
+            $this->query($query);
+    }
+
+    public function delete(string $table_name, array $where = []) {
+        $table_name = $this->escape($table_name);
+
+        $where_data = [];
+
+        foreach ($where as $key => $value) {
+            $where_data[] = $this->escape($key) . ' = \'' . $this->escape($value) . '\'';
+        }
+
+        $query = "DELETE FROM $table_name";
+
+        if (!empty($where_data)) {
+            $where_data = implode(' AND ', $where_data);
+            $query .= ' WHERE ' . $where_data;
+        }
+
+        $this->query($query);
+    }
+
+    public function escape(string $value) {
+        return mysqli_real_escape_string($this->connect, $value);
     }
 
 }

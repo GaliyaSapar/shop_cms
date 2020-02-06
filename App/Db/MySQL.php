@@ -26,6 +26,9 @@ class MySQL
             return;
         }
 
+
+        //
+
         $this->connect = mysqli_connect($this->host, $this->username, $this->password, $this->db_name);
 
 //        $mysql_errno = mysqli_connect_errno();

@@ -7,37 +7,37 @@ class Product extends Model
     /**
      * @var int
      */
-    protected $id = 0;
+    protected $id;
 
     /**
      * @var string
      */
-    protected $name = '';
+    protected $name;
 
     /**
      * @var float
      */
-    protected $price = 0.0;
+    protected $price;
 
     /**
      * @var int
      */
-    protected $amount = 0;
+    protected $amount;
 
     /**
      * @var string
      */
-    protected  $description = '';
+    protected  $description;
 
     /**
      * @var int
      */
-    protected  $vendor_id = 0; // инициализация?
+    protected  $vendor_id; // инициализация?
 
     /**
      * @var array
      */
-    protected $folder_ids = [];
+    protected $folder_ids;
 
     /**
      * @return int

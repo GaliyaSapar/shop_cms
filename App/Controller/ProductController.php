@@ -98,6 +98,7 @@ class ProductController
         ProductService::save($product);
 
         RequestService::redirect('/');
+
     }
 
 }

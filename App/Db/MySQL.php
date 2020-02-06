@@ -51,7 +51,7 @@ class MySQL
 
         if(!$mysqli_query) {
             // зачем создавать соединение, если в запросе есть создание
-            $message = 'MySQL query error: (' . mysqli_errno($this->connect . ') ' . mysqli_error($this->connect));
+            $message = 'MySQL query error: (' . mysqli_errno($this->connect) . ') ' . mysqli_error($this->connect);
             throw new \Exception($message);
         }
     }
@@ -113,6 +113,7 @@ class MySQL
         $table_name = $this->escape($table_name);
 
         $columns = array_keys($value);
+
         $columns = array_map(function ($item) {
             return $this->escape($item);
         }, $columns);
@@ -125,11 +126,10 @@ class MySQL
 
         $values = '\'' . implode('\',\'', $values) . '\'';
 
-        $query = "INSERT INTO $table_name($columns) VALUES ($values)";
+        $query = "INSERT INTO $table_name ($columns) VALUES ($values)";
         $this->query($query);
 
         return mysqli_insert_id($this->connect);
-
     }
 
     public function update(string $table_name, array $values, array $where = []) {
@@ -177,7 +177,7 @@ class MySQL
     }
 
     public function escape(string $value) {
-        return mysqli_real_escape_string($this->connect, $value);
+        return mysqli_real_escape_string($this->connect(), $value);
     }
 
 }

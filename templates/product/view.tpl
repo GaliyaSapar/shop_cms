@@ -12,7 +12,7 @@
                     <ul>
                         <li>Кол-во товара: {$product->getAmount()}</li>
                         {assign var=product_vendor_id value=$product->getVendorId()}
-                        <li>Производитель: {$vendors[product_vendor_id]->getName()}</li>
+                        <li>Производитель: {$vendors[$product_vendor_id]->getName()}</li>
                         <li>Категории: {foreach from=$product->getFolderIds() item=folder_id name=product_folder_ids}
                                 {$folders[$folder_id]->getName()}{if !$smarty.foreach.product_folder_ids.last}, {/if}{foreachelse}&ndash;{/foreach}</li>
                     </ul>

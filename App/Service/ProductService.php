@@ -17,13 +17,23 @@ class ProductService
 
 
     /**
+
      * @param string|null $hash_key
+     * @param integer $start
+     * @param integer $limit
      * @return Product[]
      */
 
-    public static function getList(string $hash_key = null) : array {
+    public static function getList(string $hash_key = null, int $start = 0, int $limit = 100) : array {
 
         $query = "SELECT * FROM products";
+
+//        if ($product_id > 0) {
+//            $query .= " WHERE id = $product_id";
+//        }
+
+        $query .= " ORDER BY id LIMIT $start, $limit";
+
 
         if (is_null($hash_key)) {
             $products = db()->fetchAll($query, Product::class);
@@ -36,6 +46,22 @@ class ProductService
 
     }
 
+    public static function getCount(string $where = null) {
+
+        $query = "SELECT COUNT(*) as count FROM products";
+
+        if ($where) {
+            $query .= $where;
+        }
+
+        /**
+         * @var $result Model
+         */
+        $result = db()->fetchRow($query, Model::class); //создается объект класса Модел, создается его свойство count
+
+        return (int) $result->getProperty('count') ?? 0;
+    }
+
     /**
      * @param int $product_id
      * @return Product
@@ -46,12 +72,66 @@ class ProductService
 
         $product = db()->fetchRow($query, Product::class);
 
-        static::getFolderIdsForProduct($product);
-
+        if ($product) {
+            static::getFolderIdsForProduct($product);
+        }
         return $product;
+    }
 
+    public static function searchById(int $product_id) {
+        $query = "SELECT * FROM products";
+        $where = "  WHERE id = $product_id";
 
+        $product = db()->fetchRow($query . $where, Product::class);
 
+        if ($product) {
+            static::getFolderIdsForProduct($product);
+        }
+
+        $products[] = $product;
+        $products = [
+            'count' => static::getCount($where),
+            'items' => $products
+        ];
+
+        return $products;
+    }
+
+    public static function searchByName(string $product_name) {
+
+        $query = "SELECT * FROM products";
+        $where = " WHERE name LIKE '%$product_name%'";
+        
+        $products = db()->fetchAllHash($query . $where, 'id',Product::class);
+
+        if ($products) {
+            static::getFolderIdsForProducts($products);
+        }
+
+        $products = [
+            'count' => static::getCount($where),
+            'items' => $products
+        ];
+
+        return $products;
+    }
+
+    public static function searchByPrice(float $product_price_from, float $product_price_to) {
+
+        $query = "SELECT * FROM products";
+        $where = " WHERE price BETWEEN $product_price_from AND $product_price_to";
+
+        $products = db()->fetchAllHash($query . $where, 'id',Product::class);
+
+        if ($products) {
+            static::getFolderIdsForProducts($products);
+        }
+        $products = [
+            'count' => static::getCount($where),
+            'items' => $products
+        ];
+
+        return $products;
     }
 
     public static function save(Product $product) {
@@ -98,7 +178,6 @@ class ProductService
         foreach ($folder_ids as $link) {
             $product->addFolderId($link->folder_id);
         }
-
     }
 
     /**
@@ -137,10 +216,6 @@ class ProductService
 
                 }
             }
-
         }
-
     }
-
-
 }

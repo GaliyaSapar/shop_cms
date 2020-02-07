@@ -18,15 +18,33 @@ class ProductController
 
     public static function list() {
 
-        $products = ProductService::getList('id');
+        $current_page = RequestService::getIntFromGet('page', 1);
+        $per_page = 3;
+        $start = $per_page * ($current_page - 1);
+
+//        $products = ProductService::getList('id');
+
+        $products = [
+            'count' => ProductService::getCount(),
+            'items' => ProductService::getList('id', $start, $per_page)
+        ];
+
         $vendors = VendorService::getlist('id');
         $folders = FolderService::getList('id');
+
+        $paginator = [
+            'pages' => ceil($products['count'] / $per_page),
+            'current' => $current_page
+        ];
 
         smarty()->assign_by_ref('products',$products);
         smarty()->assign_by_ref('folders', $folders);
         smarty()->assign_by_ref('vendors', $vendors);
+        smarty()->assign_by_ref('paginator', $paginator);
         smarty()->display('index.tpl');
     }
+
+
 
     public static function view() {
 
@@ -37,12 +55,41 @@ class ProductController
         $folders = FolderService::getList('id');
         $vendors = VendorService::getList('id');
 
-//        echo '<pre>'; var_dump($product); echo '</pre>';
-
         smarty()->assign_by_ref('product', $product);
         smarty()->assign_by_ref('folders', $folders);
         smarty()->assign_by_ref('vendors', $vendors);
         smarty()->display('product/view.tpl');
+    }
+
+    public static function search() {
+        $product_id = RequestService::getIntFromGet('product_id');
+        $product_name = RequestService::getStringFromGet('product_name');
+        $product_price_from = RequestService::getFloatFromGet('product_price_from');
+        $product_price_to = RequestService::getFloatFromGet('product_price_to');
+
+
+        if ($product_id > 0) {
+
+            $products = ProductService::searchById($product_id);
+
+        } else if ($product_name) {
+
+            $products = ProductService::searchByName($product_name);
+
+        } else if ($product_price_from && $product_price_to) {
+
+            $products = ProductService::searchByPrice($product_price_from, $product_price_to);
+
+        }
+
+        $folders = FolderService::getList('id');
+        $vendors = VendorService::getList('id');
+
+
+        smarty()->assign_by_ref('products', $products);
+        smarty()->assign_by_ref('folders', $folders);
+        smarty()->assign_by_ref('vendors', $vendors);
+        smarty()->display('product/search.tpl');
     }
 
     public static function edit() {

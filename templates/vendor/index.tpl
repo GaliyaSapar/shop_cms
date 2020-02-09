@@ -12,6 +12,7 @@
         <tr>
             <th scope="col" width="1">#</th>
             <th scope="col">Название</th>
+            <th scope="col">Описание</th>
             <th scope="col" width="1">&nbsp;</th>
         </tr>
         </thead>
@@ -19,7 +20,8 @@
         {foreach from=$vendors item=vendor}
             <tr>
                 <th scope="row"></th>
-                <td>{$vendor->getName()}</td>
+                <td>{$vendor->getName()}
+                <td>{$vendor->getDescription()}</td>
                 <td style="white-space: nowrap;"><a href="/vendor/edit.php?vendor_id={$vendor->getId()}" class="btn btn-sm btn-primary">Редактировать</a>
                     <form style="display:inline-block;" action="/vendor/delete.php" method="post"><input type="hidden" name="vendor_id" value="{$vendor->getId()}"><input type="submit" class="btn btn-sm btn-danger ml-2" value="Удалить"/></form></td>
             </tr>

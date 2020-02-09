@@ -1,11 +1,13 @@
 <?php
 
-use App\Service\VendorService;
+use App\Controller\VendorController;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/../App/bootstrap.php';
 
-$vendors = VendorService::getList('id');
+VendorController::list();
 
-smarty()->assign_by_ref('vendors', $vendors);
-smarty()->display('vendor/index.tpl');
+
+
+
+
 

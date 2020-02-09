@@ -29,4 +29,29 @@ class FolderService
 
     }
 
+    public static function getById(int $folder_id) {
+        $query = "SELECT * FROM folders WHERE id = $folder_id";
+
+        $folder = db()->fetchRow($query, Folder::class);
+
+        return $folder;
+    }
+
+    public static function delete(Folder $folder) {
+
+        db()->delete('folders', ['id' => $folder->getId()]);
+
+        return true;
+    }
+
+    public static function save(Folder $folder) {
+        $folder_id = $folder->getId();
+
+        if ($folder_id > 0) {
+            db()->update('folders', ['name' => $folder->getName()], ['id' => $folder_id] );
+        } else {
+            db()->insert('folders', ['name' => $folder->getName()]);
+        }
+    }
+
 }

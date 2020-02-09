@@ -138,7 +138,7 @@ class MySQL
         $set_data = [];
 
         foreach ($values as $key => $value) {
-            $set_data[] = $this->escape($key) . ' = \'' . $this.$this->escape($value) . '\'';
+            $set_data[] = $this->escape($key) . ' = \'' . $this->escape($value) . '\'';
 
         }
             $set_data = implode(', ', $set_data);
@@ -154,6 +154,7 @@ class MySQL
                 $where_data = implode(' AND ', $where_data);
                 $query .= ' WHERE ' . $where_data;
             }
+            echo '<pre>'; var_dump($query); echo '/pre';
             $this->query($query);
     }
 

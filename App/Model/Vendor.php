@@ -9,12 +9,17 @@ class Vendor extends Model
     /**
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * @var string
      */
-    protected $name;
+    protected $name = '';
+
+    /**
+     * @var string
+     */
+    protected $description = '';
 
     /**
      * @return int
@@ -38,6 +43,22 @@ class Vendor extends Model
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
     }
 
 

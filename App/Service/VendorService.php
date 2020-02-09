@@ -28,4 +28,29 @@ class VendorService
 
     }
 
+    public static function getById(int $vendor_id) {
+        $query = "SELECT * FROM vendors WHERE id = $vendor_id";
+
+        $vendor = db()->fetchRow($query, Vendor::class);
+
+        return $vendor;
+    }
+
+    public static function delete(Vendor $vendor) {
+
+        db()->delete('vendors', ['id' => $vendor->getId()]);
+
+        return true;
+    }
+
+    public static function save(Vendor $vendor) {
+        $vendor_id = $vendor->getId();
+
+        if ($vendor_id > 0) {
+            db()->update('vendors', ['name' => $vendor->getName(), 'description' => $vendor->getDescription()], ['id' => $vendor_id] );
+        } else {
+            db()->insert('vendors', ['name' => $vendor->getName(), 'description'=> $vendor->getDescription()]);
+        }
+    }
+
 }

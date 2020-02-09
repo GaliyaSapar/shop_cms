@@ -7,12 +7,12 @@ class Folder extends Model
     /**
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * @var string
      */
-    protected $name;
+    protected $name = '';
 
     /**
      * @return int

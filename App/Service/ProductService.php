@@ -162,6 +162,9 @@ class ProductService
     }
 
     private static function updateLinksWithFolders(int $product_id, array $folder_ids) {
+
+//        $folder_ids = array_unique($folder_ids);
+
         foreach ($folder_ids as $folder_id) {
             db()->insert('products_folders', ['product_id' => $product_id, 'folder_id' => $folder_id]);
         }

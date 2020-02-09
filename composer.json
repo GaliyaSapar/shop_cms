@@ -1,7 +1,8 @@
 {
   "name" : "learn/shop_cms",
   "require": {
-    "smarty/smarty" : "2.6.31"
+    "smarty/smarty" : "2.6.31",
+    "fzaninotto/faker": "^1.9"
   },
   "autoload": {
     "psr-4": {

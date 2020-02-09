@@ -2,22 +2,32 @@
 <div class="row">
     <div class="col-6 mb-4"><a href="/product/edit.php" class="btn btn-success">Добавить товар</a></div>
     <div class="col-6 mb-4">
-            <div>
+        <div class="mb-2">Искать по: </div>
+            <div class="mb-2">
 {*                <label for="search_type">Искать по: </label>*}
 {*                <select class="form-control" name="search_option" id="search_type">*}
 {*                    <option value="id">ID</option>*}
 {*                    <option selected value="name">Название</option>*}
 {*                    <option value="price">Цена</option>*}
 {*                </select>*}
-                <div>Искать по: </div>
-                <label><input checked type="radio" name="search_type" value="id"'; > ID </label>
-                <label><input type="radio" name="search_type" value="name"'; > Название </label>
-                <label><input type="radio" name="search_type" value="price"'; > Цена </label>
 
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input checked type="radio" id="radio_id"  name="search_type" value="id" class="custom-control-input">
+                    <label class="custom-control-label" for="radio_id">ID </label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="radio_name"  name="search_type" value="name" class="custom-control-input">
+                    <label class="custom-control-label" for="radio_name">Название </label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="radio_price"  name="search_type" value="price" class="custom-control-input">
+                    <label class="custom-control-label" for="radio_price">Цена </label>
+                </div>
             </div>
 
             {literal}
             <script>
+
                 $("input[name=search_type]").change(function () {
                     if ($(this).val() == 'name') {
                         $('.by-name').css('display', 'block');
@@ -33,8 +43,6 @@
                         $('.by-id').css('display', 'none');
                     }
                 });
-
-
 
                 // $('#search_type').change(function () {
                 //     if ($('#search_type :selected').val() == 'name') {
@@ -53,29 +61,28 @@
                 // });
             </script>
             {/literal}
-            <p></p>
 
             <div>
                 <form action="product/search.php" method="get" class="by-name">
                     {*        <input type="hidden" name="product_id" value="{$product->getId()}">*}
-                    <div class="form-group" style="display: inline-block">
-                        <input id="product_name" type="text" name="product_name" class="form-control" style="display:block">
+                    <div class="form-group" >
+                        <input id="product_name" type="text" name="product_name" class="form-control" style="display:block" required>
                     </div>
-                    <button type="submit" class="btn btn-primary mb-2">Найти</button>
+                    <button type="submit" class="btn btn-primary">Найти</button>
                 </form>
                 <form action="product/search.php" method="get" class="by-id" style="display: none">
-                    <div class="form-group" style="display: inline-block">
-                        <input id="product_id" type="number" name="product_id" class="form-control" >
+                    <div class="form-group" >
+                        <input id="product_id" type="number" name="product_id" class="form-control" required>
                     </div>
-                    <button type="submit" class="btn btn-primary mb-2">Найти</button>
+                    <button type="submit" class="btn btn-primary">Найти</button>
                 </form>
                 <form action="product/search.php" method="get" class="by-price" style="display: none">
-                    <div class="form-group" style="display: inline-block">
-                        <label> От:
-                            <input id="product_price_from" type="text" name="product_price_from" class="form-control">
+                    <div class="form-group">
+                        <label>
+                            <input id="product_price_from" type="text" name="product_price_from" class="form-control" placeholder="От:" required>
                         </label>
-                        <label> До:
-                            <input id="product_price_to" type="text" name="product_price_to" class="form-control">
+                        <label>
+                            <input id="product_price_to" type="text" name="product_price_to" class="form-control" placeholder="До:" required>
                         </label>
                     </div>
                     <button type="submit" class="btn btn-primary mb-2">Найти</button>

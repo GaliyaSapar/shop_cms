@@ -8,8 +8,6 @@
     <meta name="generator" content="Jekyll v3.8.6">
     <title>Shop CMS</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <meta name="theme-color" content="#563d7c">
@@ -61,6 +59,24 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+        </div>
+    </div>
+
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container d-flex justify-content-between">
+            {if $user->getId()}
+                <span class="navbar-brand d-flex align-items-center">Вы зашли как: {$user->getName()}</span>
+            {else}
+                <form class="form-inline" method="post" action="/user/login.php">
+                    <label class="sr-only" for="inlineFormInputName2">Логин</label>
+                    <input type="text" name="login" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Логин">
+
+                    <label class="sr-only" for="inlineFormInputName2">Пароль</label>
+                    <input type="password" name="pass" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Пароль">
+
+                    <button type="submit" class="btn btn-primary mb-2">Войти</button>
+                </form>
+            {/if}
         </div>
     </div>
 </header>

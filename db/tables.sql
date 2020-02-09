@@ -30,6 +30,13 @@ product_id INT UNSIGNED NOT NULL,
 folder_id INT UNSIGNED NOT NULL,
 PRIMARY KEY(product_id, folder_id)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE users (
+    id INT UNSIGNED AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    pass VARCHAR(255) NOT NULL,
+    PRIMARY KEY(id))
+    ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 INSERT INTO vendors (name, description)

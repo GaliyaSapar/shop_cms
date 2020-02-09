@@ -1,6 +1,8 @@
 <?php
 
 use App\Db\MySQL;
+use App\Model\User;
+use App\Service\UserService;
 
 define('APP_DIR', __DIR__ . '/../');
 
@@ -58,3 +60,22 @@ function smarty() {
     }
     return $smarty;
 }
+
+function user() {
+    static $user;
+
+    if (is_null($user)) {
+        $user = new User();
+    }
+
+    if (isset($_SESSION['user_id'])) {
+        $user_id = (int) $_SESSION['user_id'];
+        $user = UserService::getUserById($user_id);
+    }
+    return $user;
+}
+
+session_start();
+
+
+smarty()->assign_by_ref('user', user());

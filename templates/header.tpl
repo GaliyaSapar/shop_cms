@@ -65,7 +65,8 @@
     <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container d-flex justify-content-between">
             {if $user->getId()}
-                <span class="navbar-brand d-flex align-items-center">Вы зашли как: {$user->getName()}</span>
+                <span class="navbar-brand d-flex align-items-center">Вы зашли как: <a href="/user/edit.php">{$user->getName()}</a></span>
+                <a href="/user/logout.php">Выход</a>
             {else}
                 <form class="form-inline" method="post" action="/user/login.php">
                     <label class="sr-only" for="inlineFormInputName2">Логин</label>
@@ -76,6 +77,7 @@
 
                     <button type="submit" class="btn btn-primary mb-2">Войти</button>
                 </form>
+                <a href="/user/edit.php">Зарегистрироваться</a>
             {/if}
         </div>
     </div>

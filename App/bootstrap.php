@@ -36,6 +36,8 @@ $config = require_once  APP_DIR . '/config/config.php';
  * @return MySQL
  */
 
+session_start();
+
 function db() {
     global $config; // ?
     static $mysql;
@@ -74,8 +76,5 @@ function user() {
     }
     return $user;
 }
-
-session_start();
-
 
 smarty()->assign_by_ref('user', user());

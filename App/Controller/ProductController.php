@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Model\Product;
+use App\Service\CartService;
 use App\Service\FolderService;
 use App\Service\ProductService;
 use App\Service\RequestService;
@@ -90,6 +91,13 @@ class ProductController
         smarty()->assign_by_ref('folders', $folders);
         smarty()->assign_by_ref('vendors', $vendors);
         smarty()->display('product/search.tpl');
+    }
+
+    public static function buy() {
+        $product_id = RequestService::getIntFromGet('product_id');
+        $product = ProductService::getById($product_id);
+
+        CartService::addProduct($product);
     }
 
     public static function edit() {

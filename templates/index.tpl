@@ -127,6 +127,7 @@
                         <div class="btn-group">
                             {*								<button type="button" class="btn btn-sm btn-outline-secondary">View</button>*}
                             <a href="/product/edit.php?product_id={$product->getId()}" class="btn btn-sm btn-outline-secondary">Редактировать</a>
+                            <a href="/product/buy.php?product_id={$product->getId()}" class="btn btn-sm btn-outline-secondary">Купить</a>
                         </div>
                         <small class="text-muted">{$product->getPrice()}</small>
                     </div>

@@ -1,8 +1,10 @@
 <?php
 
 use App\Db\MySQL;
+use App\Model\Cart;
 use App\Model\User;
 use App\Service\UserService;
+use App\Service\CartService;
 
 define('APP_DIR', __DIR__ . '/../');
 
@@ -66,6 +68,9 @@ function smarty() {
 function user() {
     static $user;
 
+    /**
+     * @var $user User
+     */
     if (is_null($user)) {
         $user = new User();
     }
@@ -77,4 +82,17 @@ function user() {
     return $user;
 }
 
+/**
+ * @return Cart
+ */
+
+function cart() {
+    static $cart;
+    if (is_null($cart)) {
+        $cart = CartService::getCart();
+    }
+    return $cart;
+}
+
 smarty()->assign_by_ref('user', user());
+smarty()->assign_by_ref('cart', cart());

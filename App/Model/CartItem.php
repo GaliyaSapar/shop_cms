@@ -45,6 +45,10 @@ class CartItem
         $this->amount = $amount;
     }
 
+    public function getPrice(): float {
+        return $this->getProduct()->getPrice()*$this->getAmount();
+    }
+
     public function incrementAmount(int $amount = 1): void
     {
         $this->amount += $amount;

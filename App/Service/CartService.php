@@ -32,6 +32,10 @@ class CartService
         return static::$cart;
     }
 
+    public static function clearCart() {
+        unset($_SESSION[static::$session_key]);
+    }
+
     public static function storeCart() {
         $serialized_cart = serialize(static::$cart); //why using getCart()???
 
@@ -41,14 +45,12 @@ class CartService
     public static function addProduct(Product $product) {
         $cart = static::getCart();
         $cart->add($product);
-
+        echo '<pre>'; var_dump($cart); echo '</pre>';
         static::storeCart(); // here
     }
 
     private static function isCartExist() {
         return isset($_SESSION[static::$session_key]);
     }
-
-
 
 }

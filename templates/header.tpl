@@ -88,3 +88,29 @@
 
     <div class="album py-5 bg-light">
         <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <h5>Корзина</h5>
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <td>Всего позиций:</td>
+                            <th>{$cart->getCartItemsCount()}</th>
+                        </tr>            <tr>
+                            <td>Всего товаров:</td>
+                            <th>{$cart->getAmount()}</th>
+                        </tr>
+                        <tr>
+                            <td>На сумму:</td>
+                            <th>{$cart->getPrice()}</th>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="btn-group btn-sm">
+                        <a href="/cart/view.php" class="btn btn-sm btn-primary">Оформить заказ</a>
+                        <a href="/cart/clear.php" class="btn btn-sm btn-danger">Очистить корзину</a>
+                    </div>
+
+                </div>
+                <div class="col-md-9">

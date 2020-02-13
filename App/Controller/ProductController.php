@@ -45,8 +45,6 @@ class ProductController
         smarty()->display('index.tpl');
     }
 
-
-
     public static function view() {
 
         $product_id = RequestService::getIntFromGet('product_id');
@@ -86,7 +84,6 @@ class ProductController
         $folders = FolderService::getList('id');
         $vendors = VendorService::getList('id');
 
-
         smarty()->assign_by_ref('products', $products);
         smarty()->assign_by_ref('folders', $folders);
         smarty()->assign_by_ref('vendors', $vendors);
@@ -98,6 +95,7 @@ class ProductController
         $product = ProductService::getById($product_id);
 
         CartService::addProduct($product);
+        RequestService::redirect($_SERVER['HTTP_REFERER']);
     }
 
     public static function edit() {
@@ -107,8 +105,6 @@ class ProductController
 
             die('permission denied');
         }
-
-
 
         $product_id = RequestService::getIntFromGet('product_id');
 
@@ -171,5 +167,4 @@ class ProductController
         RequestService::redirect('/');
 
     }
-
 }

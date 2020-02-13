@@ -45,7 +45,7 @@ function db() {
     static $mysql;
 
     if (is_null($mysql)) {
-        $mysql = new MySQL($config['db']['host'], $config['db']['user'], $config['db']['password'], $config['db']['db_name']);
+        $mysql = new MySQL($config['db']['host'], $config['db']['user'], $config['db']['password'], $config['db']['db_name'], $config['db']['port']);
     }
 
     return $mysql;
@@ -94,5 +94,8 @@ function cart() {
     return $cart;
 }
 
-smarty()->assign_by_ref('user', user());
-smarty()->assign_by_ref('cart', cart());
+$user = user();
+$cart = cart();
+
+smarty()->assign_by_ref('user', $user);
+smarty()->assign_by_ref('cart', $cart);

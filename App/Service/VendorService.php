@@ -53,4 +53,13 @@ class VendorService
         }
     }
 
+    /**
+     * @return Vendor|null
+     */
+
+    public static function getRandom() {
+        $query = "SELECT * FROM vendors ORDER BY RAND() LIMIT 1";
+        return db()->fetchRow($query, Vendor::class);
+    }
+
 }

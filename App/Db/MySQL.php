@@ -10,22 +10,24 @@ class MySQL
     private $username;
     private $password;
     private $db_name;
+    private $db_port;
 
     private $connect;
 
-    public function __construct(string $host, string $username, string $password, string $db_name)
+    public function __construct(string $host, string $username, string $password, string $db_name, string $db_port)
     {
         $this->host = $host;
         $this->username = $username;
         $this->password = $password;
         $this->db_name = $db_name;
+        $this->db_port = (int) $db_port;
     }
 
     private function connect() {
 
         if (!$this->connect) {
 
-            $this->connect = mysqli_connect($this->host, $this->username, $this->password, $this->db_name);
+            $this->connect = mysqli_connect($this->host, $this->username, $this->password, $this->db_name, $this->db_port);
 
 //        $mysql_errno = mysqli_connect_errno();
 //        if ($mysql_errno > 0) {

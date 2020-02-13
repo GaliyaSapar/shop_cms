@@ -54,4 +54,12 @@ class FolderService
         }
     }
 
+    /**
+     * @return Folder|null
+     */
+    public static function getRandom() {
+        $query = "SELECT * FROM folders ORDER BY RAND() LIMIT 1";
+        return db()->fetchRow($query, Folder::class);
+    }
+
 }

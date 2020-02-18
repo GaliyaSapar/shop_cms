@@ -20,7 +20,7 @@ class ProductController
     public static function list() {
 
         $current_page = RequestService::getIntFromGet('page', 1);
-        $per_page = 3;
+        $per_page = 20;
         $start = $per_page * ($current_page - 1);
 
 //        $products = ProductService::getList('id');
@@ -66,13 +66,11 @@ class ProductController
         $product_price_from = RequestService::getFloatFromGet('product_price_from');
         $product_price_to = RequestService::getFloatFromGet('product_price_to');
 
-
         if ($product_id > 0) {
 
             $products = ProductService::searchById($product_id);
 
         } else if ($product_name) {
-
             $products = ProductService::searchByName($product_name);
 
         } else if ($product_price_from && $product_price_to) {

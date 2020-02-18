@@ -12,7 +12,7 @@
 {*                </select>*}
 
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input checked type="radio" id="radio_id"  name="search_type" value="id" class="custom-control-input">
+                    <input type="radio" id="radio_id"  name="search_type" value="id" class="custom-control-input" checked>
                     <label class="custom-control-label" for="radio_id">ID </label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
@@ -29,14 +29,15 @@
             <script>
 
                 $("input[name=search_type]").change(function () {
-                    if ($(this).val() == 'name') {
-                        $('.by-name').css('display', 'block');
-                        $('.by-price').css('display', 'none');
-                        $('.by-id').css('display', 'none');
-                    } else if ($(this).val() == 'id') {
+
+                    if ($(this).val() == 'id') {
                         $('.by-id').css('display', 'block');
                         $('.by-name').css('display', 'none');
                         $('.by-price').css('display', 'none');
+                    } else if ($(this).val() == 'name') {
+                        $('.by-name').css('display', 'block');
+                        $('.by-price').css('display', 'none');
+                        $('.by-id').css('display', 'none');
                     } else if ($(this).val() == 'price') {
                         $('.by-name').css('display', 'none');
                         $('.by-price').css('display', 'block');
@@ -63,19 +64,20 @@
             {/literal}
 
             <div>
-                <form action="product/search.php" method="get" class="by-name">
-                    {*        <input type="hidden" name="product_id" value="{$product->getId()}">*}
-                    <div class="form-group" >
-                        <input id="product_name" type="text" name="product_name" class="form-control" style="display:block" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Найти</button>
-                </form>
-                <form action="product/search.php" method="get" class="by-id" style="display: none">
+                <form action="product/search.php" method="get" class="by-id" style="display: block">
                     <div class="form-group" >
                         <input id="product_id" type="number" name="product_id" class="form-control" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Найти</button>
                 </form>
+
+                <form action="product/search.php" method="get" class="by-name" style="display: none">
+                    <div class="form-group" >
+                        <input id="product_name" type="text" name="product_name" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Найти</button>
+                </form>
+
                 <form action="product/search.php" method="get" class="by-price" style="display: none">
                     <div class="form-group">
                         <label>
@@ -88,7 +90,6 @@
                     <button type="submit" class="btn btn-primary mb-2">Найти</button>
                 </form>
             </div>
-
     </div>
 </div>
 <p>Всего товаров: {$products.count}</p>
@@ -107,6 +108,7 @@
 </nav>
 
 <div class="row">
+
     {foreach from=$products.items item=product}
         <div class="col-md-4">
             <div class="card mb-4 shadow-sm">

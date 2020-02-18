@@ -1,7 +1,8 @@
 {include file="header.tpl"}
 <p>Найдено товаров: {$products.count}</p>
-<div class="row">
 
+<div class="row">
+{if $products.count > 0}
 {foreach from=$products.items item=product}
     <div class="col-md-4">
         <div class="card mb-4 shadow-sm">
@@ -29,6 +30,9 @@
         </div>
     </div>
 {/foreach}
+{else}
+
+{/if}
 </div>
 
 {include file="bottom.tpl"}

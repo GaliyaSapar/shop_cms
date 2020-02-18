@@ -80,6 +80,7 @@ class ProductService
 
     public static function searchById(int $product_id) {
         $query = "SELECT * FROM products";
+
         $where = "  WHERE id = $product_id";
 
         $product = db()->fetchRow($query . $where, Product::class);

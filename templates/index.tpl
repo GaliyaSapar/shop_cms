@@ -1,6 +1,6 @@
 {include file="header.tpl"}
 <div class="row">
-    <div class="col-6 mb-4"><a href="/product/edit.php" class="btn btn-success">Добавить товар</a></div>
+    <div class="col-6 mb-4"><a href="/product/edit" class="btn btn-success">Добавить товар</a></div>
     <div class="col-6 mb-4">
         <div class="mb-2">Искать по: </div>
             <div class="mb-2">
@@ -64,21 +64,21 @@
             {/literal}
 
             <div>
-                <form action="product/search.php" method="get" class="by-id" style="display: block">
+                <form action="product/search" method="get" class="by-id" style="display: block">
                     <div class="form-group" >
                         <input id="product_id" type="number" name="product_id" class="form-control" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Найти</button>
                 </form>
 
-                <form action="product/search.php" method="get" class="by-name" style="display: none">
+                <form action="product/search" method="get" class="by-name" style="display: none">
                     <div class="form-group" >
                         <input id="product_name" type="text" name="product_name" class="form-control" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Найти</button>
                 </form>
 
-                <form action="product/search.php" method="get" class="by-price" style="display: none">
+                <form action="product/search" method="get" class="by-price" style="display: none">
                     <div class="form-group">
                         <label>
                             <input id="product_price_from" type="text" name="product_price_from" class="form-control" placeholder="От:" required>
@@ -115,7 +115,7 @@
                 <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"  aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Фото товара</text></svg>
                 <div class="card-body">
                     <p class="card-text">{$product->getName()}</p>
-                    <p class="card-text"><a href="/product/view.php?product_id={$product->getId()}">{$product->getName()}</a></p>
+                    <p class="card-text"><a href="/product/view?product_id={$product->getId()}">{$product->getName()}</a></p>
                     <p>
                     <ul>
                         <li>Кол-во товара: {$product->getAmount()}</li>
@@ -128,8 +128,8 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
                             {*								<button type="button" class="btn btn-sm btn-outline-secondary">View</button>*}
-                            <a href="/product/edit.php?product_id={$product->getId()}" class="btn btn-sm btn-outline-secondary">Редактировать</a>
-                            <a href="/product/buy.php?product_id={$product->getId()}" class="btn btn-sm btn-outline-secondary">Купить</a>
+                            <a href="/product/edit?product_id={$product->getId()}" class="btn btn-sm btn-outline-secondary">Редактировать</a>
+                            <a href="/product/buy?product_id={$product->getId()}" class="btn btn-sm btn-outline-secondary">Купить</a>
                         </div>
                         <small class="text-muted">{$product->getPrice()}</small>
                     </div>

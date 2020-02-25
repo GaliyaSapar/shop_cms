@@ -1,7 +1,7 @@
 <?php
 
-use App\Router;
+use App\Controller\Main;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/../App/bootstrap.php';
 
-Router::route();
+Main::index();

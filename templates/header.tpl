@@ -65,10 +65,10 @@
     <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container d-flex justify-content-between">
             {if $user->getId()}
-                <span class="navbar-brand d-flex align-items-center">Вы зашли как: <a href="/user/edit.php">{$user->getName()}</a></span>
-                <a href="/user/logout.php">Выход</a>
+                <span class="navbar-brand d-flex align-items-center">Вы зашли как: <a href="/user/edit">{$user->getName()}</a></span>
+                <a href="/user/logout">Выход</a>
             {else}
-                <form class="form-inline" method="post" action="/user/login.php">
+                <form class="form-inline" method="post" action="/user/login">
                     <label class="sr-only" for="inlineFormInputName2">Логин</label>
                     <input type="text" name="login" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Логин">
 
@@ -77,7 +77,7 @@
 
                     <button type="submit" class="btn btn-primary mb-2">Войти</button>
                 </form>
-                <a href="/user/edit.php">Зарегистрироваться</a>
+                <a href="/user/edit">Зарегистрироваться</a>
             {/if}
         </div>
     </div>
@@ -108,8 +108,8 @@
                     </table>
 
                     <div class="btn-group btn-sm">
-                        <a href="/cart/view.php" class="btn btn-sm btn-primary">Оформить заказ</a>
-                        <a href="/cart/clear.php" class="btn btn-sm btn-danger">Очистить корзину</a>
+                        <a href="/cart/view" class="btn btn-sm btn-primary">Оформить заказ</a>
+                        <a href="/cart/clear" class="btn btn-sm btn-danger">Очистить корзину</a>
                     </div>
 
                 </div>

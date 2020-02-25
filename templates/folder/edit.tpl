@@ -1,6 +1,6 @@
 {include file="header.tpl"}
 
-<form action="/folder/editing.php" method="post">
+<form action="/folder/editing" method="post">
     <input type="hidden" name="folder_id" value="{$folder->getId()}">
     <div class="form-group">
         <label for="name">Название категории</label>

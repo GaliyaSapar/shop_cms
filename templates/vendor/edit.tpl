@@ -1,6 +1,6 @@
 {include file="header.tpl"}
 
-<form action="/vendor/editing.php" method="post">
+<form action="/vendor/editing" method="post">
     <input type="hidden" name="vendor_id" value="{$vendor->getId()}">
     <div class="form-group">
         <label for="name">Название производителя</label>

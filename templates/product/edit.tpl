@@ -1,6 +1,6 @@
 {include file="header.tpl"}
 
-<form action="/product/editing.php" method="post">
+<form action="/product/editing" method="post">
     <input type="hidden" name="product_id" value="{$product->getId()}">
     <div class="form-group">
         <label for="product_name">Название товара</label>

@@ -1,6 +1,6 @@
 {include file="header.tpl"}
 
-<form action="/user/editing.php" method="post">
+<form action="/user/editing" method="post">
     <input type="hidden" name="user_id" value="{$user->getId()}">
     <div class="form-group">
         <label for="name">Имя пользователя</label>

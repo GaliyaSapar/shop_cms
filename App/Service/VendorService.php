@@ -6,7 +6,7 @@ use App\Model\Vendor;
 
 class VendorService
 {
-    private function __construct()
+    public function __construct()
     {
     }
 
@@ -16,7 +16,7 @@ class VendorService
      * @return Vendor[]
      */
 
-    public static function getList(string $hash_key = null) : array {
+    public function getList(string $hash_key = null) : array {
         $query = 'SELECT * FROM vendors';
 
         if (is_null($hash_key)) {
@@ -28,7 +28,7 @@ class VendorService
 
     }
 
-    public static function getById(int $vendor_id) {
+    public function getById(int $vendor_id) {
         $query = "SELECT * FROM vendors WHERE id = $vendor_id";
 
         $vendor = db()->fetchRow($query, Vendor::class);
@@ -36,14 +36,14 @@ class VendorService
         return $vendor;
     }
 
-    public static function delete(Vendor $vendor) {
+    public function delete(Vendor $vendor) {
 
         db()->delete('vendors', ['id' => $vendor->getId()]);
 
         return true;
     }
 
-    public static function save(Vendor $vendor) {
+    public function save(Vendor $vendor) {
         $vendor_id = $vendor->getId();
 
         if ($vendor_id > 0) {
@@ -57,7 +57,7 @@ class VendorService
      * @return Vendor|null
      */
 
-    public static function getRandom() {
+    public function getRandom() {
         $query = "SELECT * FROM vendors ORDER BY RAND() LIMIT 1";
         return db()->fetchRow($query, Vendor::class);
     }

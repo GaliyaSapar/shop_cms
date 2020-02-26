@@ -17,21 +17,21 @@ class ProductController
     {
     }
 
-    public static function list() {
+    public static function list(RequestService $request, ProductService $productService, VendorService $vendorService, FolderService $folderService) {
 
-        $current_page = RequestService::getIntFromGet('page', 1);
+        $current_page = $request->getIntFromGet('page', 1);
         $per_page = 20;
         $start = $per_page * ($current_page - 1);
 
 //        $products = ProductService::getList('id');
 
         $products = [
-            'count' => ProductService::getCount(),
-            'items' => ProductService::getList('id', $start, $per_page)
+            'count' => $productService->getCount(),
+            'items' => $productService->getList('id', $start, $per_page)
         ];
 
-        $vendors = VendorService::getlist('id');
-        $folders = FolderService::getList('id');
+        $vendors = $vendorService->getlist('id');
+        $folders = $folderService->getList('id');
 
         $paginator = [
             'pages' => ceil($products['count'] / $per_page),

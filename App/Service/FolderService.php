@@ -8,7 +8,7 @@ use App\Model\Folder;
 
 class FolderService
 {
-    private function __construct()
+    public function __construct()
     {
     }
 
@@ -17,7 +17,7 @@ class FolderService
      * @return Folder[]
      */
 
-    public static function getList(string $hash_key = null) : array {
+    public function getList(string $hash_key = null) : array {
         $query = 'SELECT * FROM folders';
 
         if (is_null($hash_key)) {
@@ -29,7 +29,7 @@ class FolderService
 
     }
 
-    public static function getById(int $folder_id) {
+    public function getById(int $folder_id) {
         $query = "SELECT * FROM folders WHERE id = $folder_id";
 
         $folder = db()->fetchRow($query, Folder::class);
@@ -37,14 +37,14 @@ class FolderService
         return $folder;
     }
 
-    public static function delete(Folder $folder) {
+    public function delete(Folder $folder) {
 
         db()->delete('folders', ['id' => $folder->getId()]);
 
         return true;
     }
 
-    public static function save(Folder $folder) {
+    public function save(Folder $folder) {
         $folder_id = $folder->getId();
 
         if ($folder_id > 0) {
@@ -57,7 +57,7 @@ class FolderService
     /**
      * @return Folder|null
      */
-    public static function getRandom() {
+    public function getRandom() {
         $query = "SELECT * FROM folders ORDER BY RAND() LIMIT 1";
         return db()->fetchRow($query, Folder::class);
     }

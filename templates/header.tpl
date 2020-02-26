@@ -43,8 +43,8 @@
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
                     <ul class="list-unstyled">
-                        <li><a href="/folder/" class="text-white">Категории</a></li>
-                        <li><a href="/vendor/" class="text-white">Производители</a></li>
+                        <li><a href="/folder" class="text-white">Категории</a></li>
+                        <li><a href="/vendor" class="text-white">Производители</a></li>
                     </ul>
                 </div>
             </div>
@@ -108,7 +108,7 @@
                     </table>
 
                     <div class="btn-group btn-sm">
-                        <a href="/cart/view" class="btn btn-sm btn-primary">Оформить заказ</a>
+                        <a href="/cart" class="btn btn-sm btn-primary">Оформить заказ</a>
                         <a href="/cart/clear" class="btn btn-sm btn-danger">Очистить корзину</a>
                     </div>
 

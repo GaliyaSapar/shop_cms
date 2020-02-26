@@ -17,7 +17,7 @@ class ProductController
     {
     }
 
-    public static function list(RequestService $request, ProductService $productService, VendorService $vendorService, FolderService $folderService) {
+    public static function list(RequestService $request, ProductService $productService, VendorService $vendorService, FolderService $folderService, \Smarty $smarty) {
 
         $current_page = $request->getIntFromGet('page', 1);
         $per_page = 20;
@@ -38,11 +38,11 @@ class ProductController
             'current' => $current_page
         ];
 
-        smarty()->assign_by_ref('products',$products);
-        smarty()->assign_by_ref('folders', $folders);
-        smarty()->assign_by_ref('vendors', $vendors);
-        smarty()->assign_by_ref('paginator', $paginator);
-        smarty()->display('index.tpl');
+        $smarty->assign_by_ref('products',$products);
+        $smarty->assign_by_ref('folders', $folders);
+        $smarty->assign_by_ref('vendors', $vendors);
+        $smarty->assign_by_ref('paginator', $paginator);
+        $smarty->display('index.tpl');
     }
 
     public static function view() {

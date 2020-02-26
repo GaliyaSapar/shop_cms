@@ -1,8 +1,10 @@
 <?php
 
 use App\Db\MySQL;
+use App\Factory;
 use App\Model\Cart;
 use App\Model\User;
+use App\Router;
 use App\Service\UserService;
 use App\Service\CartService;
 
@@ -40,6 +42,20 @@ $config = require_once  APP_DIR . '/config/config.php';
 
 session_start();
 
+$factory = new Factory();
+
+$factory->addSingletone(Smarty::class, function() use ($config) {
+    $smarty = new Smarty();
+
+    $smarty->template_dir = $config['template']['template_dir'];
+    $smarty->compile_dir = $config['template']['compile_dir'];
+    $smarty->cache_dir = $config['template']['cache_dir'];
+
+    return $smarty;
+});
+
+$router = new Router($factory);
+
 function db() {
     global $config; // ?
     static $mysql;
@@ -51,19 +67,19 @@ function db() {
     return $mysql;
 }
 
-function smarty() {
-    global $config; // ?
-    static $smarty;
-
-    if(is_null($smarty)) {
-        $smarty = new Smarty(); //?
-
-        $smarty->template_dir = $config['template']['template_dir'];
-        $smarty->compile_dir = $config['template']['compile_dir'];
-        $smarty->cache_dir = $config['template']['cache_dir'];
-    }
-    return $smarty;
-}
+//function smarty() {
+//    global $config; // ?
+//    static $smarty;
+//
+//    if(is_null($smarty)) {
+//        $smarty = new Smarty(); //?
+//
+//        $smarty->template_dir = $config['template']['template_dir'];
+//        $smarty->compile_dir = $config['template']['compile_dir'];
+//        $smarty->cache_dir = $config['template']['cache_dir'];
+//    }
+//    return $smarty;
+//}
 
 function user() {
     static $user;
@@ -97,5 +113,7 @@ function cart() {
 $user = user();
 $cart = cart();
 
-smarty()->assign_by_ref('user', $user);
-smarty()->assign_by_ref('cart', $cart);
+$smarty = $factory->getInstance(Smarty::class);
+
+$smarty->assign_by_ref('user', $user);
+$smarty->assign_by_ref('cart', $cart);

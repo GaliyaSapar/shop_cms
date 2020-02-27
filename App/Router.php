@@ -5,6 +5,10 @@ namespace App;
 
 class Router {
 
+    /**
+     * @var Factory
+     */
+
     private $factory;
 
     public function __construct(Factory $factory)
@@ -51,6 +55,7 @@ class Router {
 //            echo '<pre>'; var_dump($className); echo '</pre>';
 
             $arguments[] = $this->factory->getInstance($className);
+
 
         }
 

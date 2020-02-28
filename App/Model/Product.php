@@ -5,6 +5,10 @@ namespace App\Model;
 class Product extends Model
 {
     /**
+     * @var string
+     */
+    protected $table_name ='products';
+    /**
      * @var int
      */
     protected $id;

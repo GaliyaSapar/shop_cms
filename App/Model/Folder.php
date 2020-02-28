@@ -5,6 +5,10 @@ namespace App\Model;
 class Folder extends Model
 {
     /**
+     * @var string
+     */
+    protected $table_name = 'folders';
+    /**
      * @var int
      */
     protected $id = 0;

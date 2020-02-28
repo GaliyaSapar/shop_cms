@@ -2,12 +2,8 @@
 
 namespace App\Model;
 
-use App\Db\IModel;
 
-class Model implements IModel
+class Model extends ModelAbstract
 {
-    public function getProperty(string $key)
-    {
-        return $this->$key;
-    }
+
 }

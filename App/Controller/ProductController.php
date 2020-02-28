@@ -3,21 +3,21 @@
 
 namespace App\Controller;
 
+use App\Http\Request;
 use App\Model\Product;
+use App\Repository\FolderRepository;
+use App\Repository\ProductRepository;
+use App\Repository\VendorRepository;
 use App\Service\CartService;
 use App\Service\FolderService;
 use App\Service\ProductService;
 use App\Service\RequestService;
 use App\Service\VendorService;
 
-class ProductController
+class ProductController extends ControllerAbstract
 {
 
-    private function __construct()
-    {
-    }
-
-    public static function list(RequestService $request, ProductService $productService, VendorService $vendorService, FolderService $folderService, \Smarty $smarty) {
+    public function list(Request $request, ProductRepository $product_repository, VendorRepository $vendor_repository, FolderRepository $folder_repository) {
 
         $current_page = $request->getIntFromGet('page', 1);
         $per_page = 20;
@@ -26,23 +26,26 @@ class ProductController
 //        $products = ProductService::getList('id');
 
         $products = [
-            'count' => $productService->getCount(),
-            'items' => $productService->getList('id', $start, $per_page)
+            'count' => $product_repository->getCount(),
+            'items' => $product_repository->findAllWithLimit($start, $per_page)
         ];
 
-        $vendors = $vendorService->getlist('id');
-        $folders = $folderService->getList('id');
+        $vendors = $vendor_repository->findAll();
+        $folders = $folder_repository->findAll();
 
         $paginator = [
             'pages' => ceil($products['count'] / $per_page),
             'current' => $current_page
         ];
 
-        $smarty->assign_by_ref('products',$products);
-        $smarty->assign_by_ref('folders', $folders);
-        $smarty->assign_by_ref('vendors', $vendors);
-        $smarty->assign_by_ref('paginator', $paginator);
-        $smarty->display('index.tpl');
+        //return ??
+
+        $this->render('index.tpl', [
+            'products' => $products,
+            'vendors' => $vendors,
+            'folders' => $folders,
+            'paginator' => $paginator,
+        ]);
     }
 
     public static function view() {

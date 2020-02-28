@@ -7,6 +7,11 @@ namespace App\Model;
 class Vendor extends Model
 {
     /**
+     * @var string
+     */
+    protected $table_name = 'vendors';
+
+    /**
      * @var int
      */
     protected $id = 0;

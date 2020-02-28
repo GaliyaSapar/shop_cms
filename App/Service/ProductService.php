@@ -79,17 +79,10 @@ class ProductService
     }
 
     public function searchById(int $product_id) {
-        $query = "SELECT * FROM products";
-
         $where = "  WHERE id = $product_id";
 
-        $product = db()->fetchRow($query . $where, Product::class);
+        $products[] = $this->getById($product_id);
 
-        if ($product) {
-            $this->getFolderIdsForProduct($product);
-        }
-
-        $products[] = $product;
         $products = [
             'count' => $this->getCount($where),
             'items' => $products
@@ -100,27 +93,18 @@ class ProductService
 
     public function searchByName(string $product_name) {
 
-        $query = "SELECT * FROM products";
         $where = " WHERE name LIKE '%$product_name%'";
-        
-        $products = db()->fetchAllHash($query . $where, 'id',Product::class);
-
-        if ($products) {
-            $this->getFolderIdsForProducts($products);
-        }
-
-        $products = [
-            'count' => $this->getCount($where),
-            'items' => $products
-        ];
-
-        return $products;
+        $this->getAll($where);
     }
 
     public function searchByPrice(float $product_price_from, float $product_price_to) {
 
-        $query = "SELECT * FROM products";
         $where = " WHERE price BETWEEN $product_price_from AND $product_price_to";
+        $this->getAll($where);
+    }
+
+    private function getAll(string $where) {
+        $query = "SELECT * FROM products";
 
         $products = db()->fetchAllHash($query . $where, 'id',Product::class);
 

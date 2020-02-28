@@ -25,7 +25,7 @@ class Router {
 
         $request_url = $request_data[0];
 
-        $routers = require_once APP_DIR . '/config/routing.php';
+        $routers = require_once APP_DIR . '/config/routes.php';
 
         $route = $routers[$request_url] ?? null;
 

@@ -5,6 +5,7 @@ namespace App\Repository;
 
 
 use App\Db\MySQL;
+use App\Model\Model;
 use App\Model\ModelAbstract;
 
 abstract class RepositoryAbstract
@@ -43,12 +44,15 @@ abstract class RepositoryAbstract
     
     public function findAllWithLimit(int $limit = 50, int $start = 0)
     {
-        $query = "SELECT * FROM " . $this->table_name . " ORDER BY id LIMIT $start, $limit";
+        $query = "SELECT * FROM " . $this->table_name . " ORDER BY id LIMIT $limit, $start";
 
         $result = $this->mySQL->fetchAllHash($query, 'id', $this->model);
 
-        return $this->modifyResultList($result);
-        
+
+        $result = $this->modifyResultList($result);
+
+        return $result;
+
     }
 
 
@@ -63,7 +67,7 @@ abstract class RepositoryAbstract
         /**
          * @var $result Model
          */
-        $result = db()->fetchRow($query, Model::class); //создается объект класса Модел, создается его свойство count
+        $result = $this->mySQL->fetchRow($query, Model::class); //создается объект класса Модел, создается его свойство count
 
         return (int) $result->getProperty('count') ?? 0;
     }
@@ -79,7 +83,9 @@ abstract class RepositoryAbstract
     }
 
     protected function modifyResultList(array $result) {
+//        echo '<pre>'; var_dump($result); echo '</pre>';
         return $result;
+
     }
 
 }

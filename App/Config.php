@@ -6,6 +6,9 @@ namespace App;
 
 class Config
 {
+    /**
+     * @var array
+     */
     private $config = [];
 
     private $config_dir = 'config.d';
@@ -21,6 +24,12 @@ class Config
         }
         $this->config = array_replace_recursive($config, $main_config);
     }
+
+    /**
+     * @param string $path
+     * @param string $delimiter
+     * @return array|mixed|null
+     */
 
     public function get(string $path, string $delimiter = '.') {
         $path = explode($delimiter, $path);

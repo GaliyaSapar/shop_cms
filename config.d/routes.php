@@ -9,5 +9,4 @@ return [
     '/' => [ProductController::class, 'list'],
     '/cart' => [CartController::class, 'view'],
     '/vendor' => [VendorController::class, 'list'],
-
 ];

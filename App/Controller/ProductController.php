@@ -38,7 +38,7 @@ class ProductController extends ControllerAbstract
             'current' => $current_page
         ];
 
-        //return ??
+//        return
 
         $this->render('index.tpl', [
             'products' => $products,

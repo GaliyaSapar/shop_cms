@@ -4,10 +4,11 @@
 namespace App\DI;
 
 
-use JsonSchema\Constraints\ObjectConstraint;
-
 class Injector
 {
+    /**
+     * @var Container
+     */
     private $container;
 
     public function __construct(Container $container)
@@ -45,7 +46,7 @@ class Injector
 
 
     /**
-     * @param $class
+     * @param string|Object $class
      * @return \ReflectionClass
      * @throws \ReflectionException
      */

@@ -28,12 +28,13 @@ final class Kernel
 
     public function __construct(Request $request, Config $config, Router $router)
     {
-        $this->request=$request;
-        $this->config=$config;
-        $this->router=$router;
+        $this->request = $request;
+        $this->config = $config;
+        $this->router = $router;
     }
 
     public function run() {
+
         $this->router->dispatch();
     }
 }

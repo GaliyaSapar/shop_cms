@@ -14,20 +14,20 @@ class MySQL
 
     private $connect;
 
-    public function __construct(string $host, string $username, string $password, string $db_name, string $db_port)
+    public function __construct(string $host, string $username, string $password, string $db_name)
     {
         $this->host = $host;
         $this->username = $username;
         $this->password = $password;
         $this->db_name = $db_name;
-        $this->db_port = (int) $db_port;
+//        $this->db_port = (int) $db_port;
     }
 
     private function connect() {
 
         if (!$this->connect) {
 
-            $this->connect = mysqli_connect($this->host, $this->username, $this->password, $this->db_name, $this->db_port);
+            $this->connect = mysqli_connect($this->host, $this->username, $this->password, $this->db_name);
 
 //        $mysql_errno = mysqli_connect_errno();
 //        if ($mysql_errno > 0) {
@@ -42,7 +42,6 @@ class MySQL
     }
 
     public function query($query) {
-
         $result = mysqli_query($this->connect(), $query);
         $this->checkErrors($result);
         return $result;
@@ -95,12 +94,12 @@ class MySQL
         return $data;
     }
 
-    private function checkModelClassExist($class_name) {
+    private function checkModelClassExist(string $class_name) {
         $class_exist = class_exists($class_name);
 
         if ($class_exist) {
             $model_class = IModel::class;
-            //$cap_object = new $class_name; //? можно проверять без объекта по названию класса
+            $cap_object = new $class_name; //? можно проверять без объекта по названию класса
             $is_model = in_array($model_class, class_implements($class_name));
 
             if (!$is_model) {

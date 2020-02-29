@@ -34,7 +34,7 @@ class ProductRepository extends RepositoryAbstract
 
             $product_ids = implode(',', $product_ids);
             $query = "SELECT * FROM products_folders WHERE product_id IN ($product_ids)";
-            $links = db()->fetchAll($query, Model::class);
+            $links = $this->mySQL->fetchAll($query, Model::class);
 
 
             foreach ($links as $pair) {

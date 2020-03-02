@@ -1,8 +1,9 @@
 {
   "name" : "learn/shop_cms",
   "require": {
+    "ext-json": "*",
+    "ext-mysqli": "*",
     "smarty/smarty" : "2.6.31",
-
     "fzaninotto/faker": "^1.9"
 
   },

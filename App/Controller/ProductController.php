@@ -38,6 +38,10 @@ class ProductController extends ControllerAbstract
             'current' => $current_page
         ];
 
+        return $this->getJsonResponse([
+           'hello' => 'world',
+        ]);
+
 //        return
 
         $this->render('index.tpl', [

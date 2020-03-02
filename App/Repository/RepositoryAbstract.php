@@ -56,6 +56,7 @@ abstract class RepositoryAbstract
     }
 
 
+
     public function getCount(string $where = null)
     {
         $query = "SELECT COUNT(*) as count FROM products";

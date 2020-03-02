@@ -4,6 +4,10 @@
 namespace App\Controller;
 
 
+use App\Http\Response;
+use App\Http\ResponseBody\JSONBody;
+use App\Http\ResponseBody\TextBody;
+
 abstract class ControllerAbstract
 {
     /**
@@ -11,9 +15,15 @@ abstract class ControllerAbstract
      */
     private $smarty;
 
-    public function __construct(\Smarty $smarty)
+    /**
+     * @var Response
+     */
+    private $response;
+
+    public function __construct(\Smarty $smarty, Response $response)
     {
         $this->smarty = $smarty;
+        $this->response = $response;
     }
 
     protected function render(string $template_name, array $params)
@@ -26,7 +36,22 @@ abstract class ControllerAbstract
             }
         }
 
-        $this->smarty->display($template_name);
+        $body = new TextBody($this->smarty->fetch($template_name));
+
+        $this->response->setBody($body);
+
+        return $this->response;
+
+//        $this->smarty->display($template_name);
+    }
+
+    protected function getJsonResponse(array $params) {
+        $body = new JSONBody($params);
+        $this->response->setBody();
+
+        $this->response->setHeaders('Content-type', 'application/json');
+
+        return $this->response;
     }
 
 }

@@ -3,6 +3,8 @@
 use App\Config;
 use App\Db\MySQL;
 use App\DI\Container;
+use App\Http\Request;
+use App\Http\Response;
 use App\Kernel;
 use App\Model\Cart;
 use App\Model\User;
@@ -35,6 +37,14 @@ session_start();
 //});
 
 $container = new Container();
+
+$container->addSingletone(Response::class, function () {
+    return new Response();
+});
+
+$container->addSingletone(Request::class, function () {
+    return new Request();
+});
 
 $container->addSingletone(MySQL::class, function () use ($container) {
     $config = $container->get(Config::class);

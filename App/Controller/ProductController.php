@@ -37,12 +37,12 @@ class ProductController extends ControllerAbstract
             'pages' => ceil($products['count'] / $per_page),
             'current' => $current_page
         ];
+//
+//        return $this->getJsonResponse([
+//            'hello' => 'world',
+//        ]);
 
-        return $this->getJsonResponse([
-           'hello' => 'world',
-        ]);
-
-//        return
+        return
 
         $this->render('index.tpl', [
             'products' => $products,

@@ -30,8 +30,15 @@ class Injector
         return $reflection_class->newInstanceArgs($arguments);
     }
 
+    /**
+     * @param Object $object
+     * @param string $method
+     * @return mixed
+     * @throws \ReflectionException
+     */
     public function callMethod(Object $object, string $method)
     {
+        
         $reflection_class = $this->getReflectionClass($object);
 
         if (!$reflection_class->hasMethod($method)) {
@@ -39,8 +46,9 @@ class Injector
         }
 
         $reflection_method = $reflection_class->getMethod($method);
+            
         $arguments = $this->getDependenciesArray($reflection_method);
-
+        
         return call_user_func_array([$object, $method], $arguments);
     }
 

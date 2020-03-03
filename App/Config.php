@@ -11,7 +11,7 @@ class Config
      */
     private $config = [];
 
-    private $config_dir = 'config.d';
+//    private $config_dir = 'config.d';
 
     public function __construct(string $main_config_path, string $default_configs_path)
     {

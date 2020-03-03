@@ -45,6 +45,7 @@ class Container
     public function getInjector(): Injector
     {
         return $this->injector;
+
     }
 
     private function getClass(string $class_name) {

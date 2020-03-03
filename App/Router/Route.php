@@ -59,7 +59,7 @@ class Route
     private function isMethodExist(ControllerAbstract $controller, string $method) {
         $reflection_controller = new \ReflectionObject($controller);
 
-        if (!$reflection_controller->hasMethod()) {
+        if (!$reflection_controller->hasMethod($method)) {
             throw new MethodDoesNotExistException($controller, $method);
         }
         return true;

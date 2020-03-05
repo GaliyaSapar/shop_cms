@@ -31,6 +31,15 @@ abstract class RepositoryAbstract
         $this->table_name = $this->getTableName();
         $this->mySQL = $mySQL;
     }
+
+    public function find(int $id)
+    {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE id = $id";
+
+        $result = $this->mySQL->fetchRow($query, $this->model);
+
+        return $this->modifyResultItem($result);
+    }
     
     public function findAll()
     {
@@ -81,6 +90,17 @@ abstract class RepositoryAbstract
         $property->setAccessible(true);
         
         return $property->getValue($model);
+    }
+
+    protected function modifyResultItem(Model $item)
+    {
+        $list = [
+            0 => $item,
+        ];
+
+        $result = $this->modifyResultList($list);
+
+        return $result[0];
     }
 
     protected function modifyResultList(array $result) {

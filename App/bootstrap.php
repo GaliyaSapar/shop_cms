@@ -8,6 +8,7 @@ use App\Http\Response;
 use App\Kernel;
 use App\Model\Cart;
 use App\Model\User;
+use Composer\Autoload\ClassLoader;
 
 
 define('APP_DIR', __DIR__ . '/../');

@@ -3,7 +3,6 @@
 
 namespace App\Service;
 
-
 use App\Model\Cart;
 use App\Model\Product;
 
@@ -12,45 +11,44 @@ class CartService
     /**
      * @var string
      */
-    private static $session_key = 'shop_cart';
+    private $session_key = 'shop_cart';
 
     /**
      * @var Cart
      */
-    private static $cart;
+    private $cart;
 
-    public static function getCart() {
-        if (static::isCartExist()) {
-            $cart_data = $_SESSION[static::$session_key];
-            static::$cart = unserialize($cart_data);
+    public function getCart() {
+
+        if (!($this->cart instanceof Cart)) {
+            if ($this->isCartExist()) {
+                $cart_data = $_SESSION[$this->session_key];
+                $this->cart = unserialize($cart_data);
+            } else {
+                $this->cart = new Cart();
+            }
         }
-
-        if(!(static::$cart instanceof Cart)) {
-            static::$cart = new Cart();
-        }
-
-        return static::$cart;
+        return $this->cart;
     }
 
-    public static function clearCart() {
-        unset($_SESSION[static::$session_key]);
+    public function clearCart() {
+        unset($_SESSION[$this->session_key]);
     }
 
-    public static function storeCart() {
-        $serialized_cart = serialize(static::$cart); //why using getCart()???
+    public function storeCart() {
+        $serialized_cart = serialize($this->cart); //why using getCart()???
 
-        $_SESSION[static::$session_key] = $serialized_cart;
+        $_SESSION[$this->session_key] = $serialized_cart;
     }
 
-    public static function addProduct(Product $product) {
-        $cart = static::getCart();
+    public function addProduct(Product $product) {
+        $cart = $this->getCart();
         $cart->add($product);
-        echo '<pre>'; var_dump($cart); echo '</pre>';
-        static::storeCart(); // here
+        $this->storeCart(); // here
     }
 
-    private static function isCartExist() {
-        return isset($_SESSION[static::$session_key]);
+    private function isCartExist() {
+        return isset($_SESSION[$this->session_key]);
     }
 
 }

@@ -4,24 +4,30 @@
 namespace App\Controller;
 
 
+use App\Http\Response;
 use App\Model\User;
+use App\Repository\UserRepository;
 use App\Service\RequestService;
 use App\Service\UserService;
 
-class UserController
+class UserController extends ControllerAbstract
 {
-    private function __construct()
-    {
-    }
-
-    public static function login() {
-        $login = RequestService::getStringFromPost('login');
-        $pass = RequestService::getStringFromPost('pass');
+    /**
+     * @param UserRepository $user_repository
+     * @param UserService $user_service
+     *
+     * @Route(url="/user/login")
+     *
+     * @return Response
+     */
+    public function login(UserRepository $user_repository, UserService $user_service) {
+        $login = $this->request->getStringFromPost('login');
+        $pass = $this->request->getStringFromPost('pass');
 
         /**
          * @var $user User
          */
-        $user = UserService::getUserByName($login);
+        $user = $user_repository->findByName($login);
 
         $error_msg = 'User not found or data is incorrect';
 
@@ -30,7 +36,7 @@ class UserController
             exit;
         }
 
-        $pass = UserService::generatePassHash($pass);
+        $pass = $user_service->generatePassHash($pass);
 
         if ($user->getPass() !== $pass) {
             echo $error_msg;
@@ -39,13 +45,16 @@ class UserController
 
         $_SESSION['user_id'] = $user->getId();
 
-        RequestService::redirect('/');
+        return $this->redirect('/');
     }
 
-
-    public static function logout() {
+    /**
+     * @return Response
+     * @Route(url="/user/logout")
+     */
+    public function logout() {
         unset($_SESSION['user_id']);
-        RequestService::redirect('/');
+        return $this->redirect('/');
     }
 
     public static function edit() {

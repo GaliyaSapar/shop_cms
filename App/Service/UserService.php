@@ -12,14 +12,32 @@ class UserService
     {
     }
 
+    /**
+     * @var User;
+     */
+    private $user;
+
     private static $salt = 'Fd@6k+7+FmhO';
 
-    public static function generatePassHash(string $pass) {
-        return static::md5(static::md5($pass));
+    public function generatePassHash(string $pass) {
+        return $this->md5($this->md5($pass));
     }
 
-    private static function md5(string $str) {
+    private function md5(string $str) {
         return md5($str . static::$salt);
+    }
+
+    public function getCurrentUser(UserRepository $user_repository) {
+        $user_id = $_SESSION['user_id'] ?? null;
+
+        if (!($this->user instanceof User)) {
+            if (!is_null($user_id)) {
+                $this->user = $user_repository->find($user_id);
+            } else {
+                $this->user = new User();
+            }
+        }
+        return $this->user;
     }
 
     public static function isValueExist(string $fieldname, string $value) {

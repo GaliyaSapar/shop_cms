@@ -38,7 +38,14 @@ class Response
         foreach ($this->headers as $header => $value) {
             header('$header: $value');
         }
-        echo (string) $this->body;
+
+        if (!is_null($this->body)) {
+            echo (string) $this->body;
+        }
+    }
+
+    public function redirect(string $url) {
+        $this->setHeaders('Location', $url);
     }
 
 }

@@ -56,6 +56,58 @@ class Router {
 
     }
 
+    private function getRoutes() {
+        $controllers = $this->config->get('controllers');
+
+        $routes = [];
+
+        foreach ($controllers as $controller) {
+            $reflection_controller = new \ReflectionClass($controller);
+            $methods = $reflection_controller->getMethods();
+
+            foreach ($methods as $method) {
+                $doc_comment = $method->getDocComment();
+
+                $matches = [];
+                preg_match_all('/@Route\(.+\)/im', $doc_comment, $matches);
+
+                if (empty($matches[0])) {
+                    continue;
+                }
+
+                $annotation_routes = $matches[0];
+
+                foreach ($annotation_routes as $annotate_route) {
+                    $annotate_params = str_replace('@Route(', '', $annotate_route);
+                    $annotate_params = str_replace(')', '', $annotate_params);
+
+                    $annotate_params = explode(',', $annotate_params);
+                    $annotate_params = array_map(function ($item) {
+                        return trim($item);
+                    }, $annotate_params);
+
+                    $params = [];
+
+                    foreach ($annotate_params as $param_str) {
+                        $param_data = explode('=', $param_str);
+                        $key = $param_data[0];
+                        $value = $param_data[1];
+
+                        $value = str_replace('\"', '', $value);
+
+                        $params[$key] = $value;
+                    }
+
+                    $routes[$params['url']] = [
+                        $controller, $method->getName(),
+                    ];
+                }
+            }
+        }
+
+        return $routes;
+    }
+
     private function notFound() {
         die('404');
     }

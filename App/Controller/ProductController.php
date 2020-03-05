@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Http\Request;
+use App\Http\Response;
 use App\Model\Product;
 use App\Repository\FolderRepository;
 use App\Repository\ProductRepository;
@@ -17,6 +18,16 @@ use App\Service\VendorService;
 class ProductController extends ControllerAbstract
 {
 
+    /**
+     * @param Request $request
+     * @param ProductRepository $product_repository
+     * @param VendorRepository $vendor_repository
+     * @param FolderRepository $folder_repository
+     *
+     * @Route(url="/product/list")
+     *
+     * @return Response
+     */
     public function list(Request $request, ProductRepository $product_repository, VendorRepository $vendor_repository, FolderRepository $folder_repository) {
 
         $current_page = $request->getIntFromGet('page', 1);
@@ -52,19 +63,29 @@ class ProductController extends ControllerAbstract
         ]);
     }
 
-    public static function view() {
+    /**
+     * @param ProductRepository $product_repository
+     * @param VendorRepository $vendor_repository
+     * @param FolderRepository $folder_repository
+     *
+     * @Route(url="/product/view")
+     *
+     * @return Response
+     */
+    public function view(ProductRepository $product_repository, VendorRepository $vendor_repository, FolderRepository $folder_repository) {
 
-        $product_id = RequestService::getIntFromGet('product_id');
+        $product_id = $this->request->getIntFromGet('product_id');
 
-        $product = ProductService::getById($product_id);
+        $product = $product_repository->find($product_id);
 
-        $folders = FolderService::getList('id');
-        $vendors = VendorService::getList('id');
+        $folders = $folder_repository->findAll();
+        $vendors = $vendor_repository->findAll();
 
-        smarty()->assign_by_ref('product', $product);
-        smarty()->assign_by_ref('folders', $folders);
-        smarty()->assign_by_ref('vendors', $vendors);
-        smarty()->display('product/view.tpl');
+        return $this->render('product/view.tpl', [
+           'product' => $product,
+           'folders' => $folders,
+           'vendors' => $vendors,
+        ]);
     }
 
     public static function search() {
@@ -95,12 +116,20 @@ class ProductController extends ControllerAbstract
         smarty()->display('product/search.tpl');
     }
 
-    public static function buy() {
-        $product_id = RequestService::getIntFromGet('product_id');
-        $product = ProductService::getById($product_id);
+    /**
+     * @param ProductRepository $product_repository
+     * @param CartService $cart_service
+     *
+     * @Route(url="/product/buy")
+     *
+     * @return Response
+     */
+    public function buy(ProductRepository $product_repository, CartService $cart_service) {
+        $product_id = $this->request->getIntFromGet('product_id');
+        $product = $product_repository->find($product_id);
 
-        CartService::addProduct($product);
-        RequestService::redirect($_SERVER['HTTP_REFERER']);
+        $cart_service->addProduct($product);
+        return $this->redirect($_SERVER['HTTP_REFERER']);
     }
 
     public static function edit() {

@@ -7,19 +7,22 @@ namespace App\Controller;
 use App\Service\CartService;
 use App\Service\RequestService;
 
-class CartController
+class CartController extends ControllerAbstract
 {
-    private function __construct()
-    {
+
+    /**
+     * @param CartService $cart_service
+     * @return \App\Http\Response
+     *
+     * @Route(url="/cart/clear")
+     */
+    public function clear(CartService $cart_service) {
+        $cart_service->clearCart();
+        return $this->redirect($_SERVER['HTTP_REFERER']);
     }
 
-    public static function clear() {
-        CartService::clearCart();
-        RequestService::redirect($_SERVER['HTTP_REFERER']);
-    }
-
-    public static function view() {
-        smarty()->display('cart/view.tpl');
-    }
+//    public static function view() {
+//        smarty()->display('cart/view.tpl');
+//    }
 
 }

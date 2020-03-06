@@ -176,6 +176,7 @@ class MySQL
         }
 
         $this->query($query);
+
     }
 
     public function escape(string $value) {

@@ -98,6 +98,9 @@ class Router {
                         $params[$key] = $value;
                     }
 
+
+
+
                     $routes[$params['url']] = [
                         $controller, $method->getName(),
                     ];

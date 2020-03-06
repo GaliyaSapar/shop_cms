@@ -16,24 +16,19 @@ class UserMiddleware implements IMiddleware
      */
     private $user_service;
 
-    /**
-     * @var Container
-     */
-    private $container;
 
-    public function __construct(UserService $user_service, Container $container)
+    public function __construct(UserService $user_service)
     {
         $this->user_service = $user_service;
-        $this->container = $container;
     }
 
     public function run(Route $route)
     {
         $controller = $route->getController();
 
-        $user_repository = $this->container->get(UserRepository::class);
+//        $user_repository = $this->container->get(UserRepository::class);
 
-        $user = $this->user_service->getCurrentUser($user_repository);
+        $user = $this->user_service->getCurrentUser();
         $controller->addSharedData('user', $user);
 
     }

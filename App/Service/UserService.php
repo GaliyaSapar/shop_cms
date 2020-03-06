@@ -5,12 +5,10 @@ namespace App\Service;
 
 
 use App\Model\User;
+use App\Repository\UserRepository;
 
 class UserService
 {
-    private function __construct()
-    {
-    }
 
     /**
      * @var User;
@@ -18,6 +16,16 @@ class UserService
     private $user;
 
     private static $salt = 'Fd@6k+7+FmhO';
+
+    /**
+     * @var UserRepository
+     */
+    private $user_repository;
+
+    public function __construct(UserRepository $user_repository)
+    {
+        $this->userRepository = $user_repository;
+    }
 
     public function generatePassHash(string $pass) {
         return $this->md5($this->md5($pass));
@@ -27,12 +35,12 @@ class UserService
         return md5($str . static::$salt);
     }
 
-    public function getCurrentUser(UserRepository $user_repository) {
+    public function getCurrentUser() {
         $user_id = $_SESSION['user_id'] ?? null;
 
         if (!($this->user instanceof User)) {
             if (!is_null($user_id)) {
-                $this->user = $user_repository->find($user_id);
+                $this->user = $this->user_repository->find($user_id);
             } else {
                 $this->user = new User();
             }

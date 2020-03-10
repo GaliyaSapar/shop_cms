@@ -4,12 +4,21 @@
 namespace App\Model;
 
 
-class Vendor extends Model
+class Vendor extends AbstractEntity
 {
     /**
      * @var string
      */
     protected $table_name = 'vendors';
+
+    protected $table_fields = [
+      'id',
+      'name',
+    ];
+
+    protected $immutable_table_fields = [
+        'id',
+    ];
 
     /**
      * @var int

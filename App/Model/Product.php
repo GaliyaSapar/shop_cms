@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class Product extends Model
+class Product extends AbstractEntity
 {
     /**
      * @var string

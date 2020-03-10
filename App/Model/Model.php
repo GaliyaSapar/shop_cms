@@ -3,7 +3,7 @@
 namespace App\Model;
 
 
-class Model extends ModelAbstract
+class Model extends AbstractEntity
 {
 
 }

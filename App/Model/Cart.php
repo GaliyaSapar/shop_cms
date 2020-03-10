@@ -9,17 +9,17 @@ class Cart
     /**
      * @var int
      */
-    private $amount = 0;
+    protected $amount = 0;
 
     /**
      * @var float
      */
-    private $price = 0;
+    protected $price = 0;
 
     /**
      * @var CartItem[]
      */
-    private $cart_items = [];
+    protected $cart_items = [];
 
 
     public function add(Product $product) {

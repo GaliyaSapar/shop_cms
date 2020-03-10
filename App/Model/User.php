@@ -4,7 +4,7 @@
 namespace App\Model;
 
 
-class User extends Model
+class User extends AbstractEntity
 {
     /**
      * @var string
@@ -14,22 +14,22 @@ class User extends Model
     /**
      * @var int
      */
-    private $id = 0;
+    protected $id = 0;
 
     /**
      * @var string
      */
-    private $name = '';
+    protected $name = '';
 
     /**
      * @var string
      */
-    private $pass = '';
+    protected $pass = '';
 
     /**
      * $var string
      */
-    private $email = '';
+    protected $email = '';
 
     /**
      * @return int

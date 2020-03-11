@@ -7,6 +7,7 @@ namespace App\Repository;
 use App\Db\MySQL;
 use App\Model\Model;
 use App\Model\ModelAbstract;
+use App\MySQL\ObjectDataManager;
 
 abstract class RepositoryAbstract
 {
@@ -16,9 +17,9 @@ abstract class RepositoryAbstract
     protected $model;
 
     /**
-     * @var MySQL
+     * @var ObjectDataManager
      */
-    protected $mySQL;
+    protected $odm;
 
     protected $table_name;
 

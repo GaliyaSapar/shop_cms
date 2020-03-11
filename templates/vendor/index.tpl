@@ -22,7 +22,7 @@
                 <th scope="row"></th>
                 <td>{$vendor->getName()}
                 <td>{$vendor->getDescription()}</td>
-                <td style="white-space: nowrap;"><a href="/vendor/edit?vendor_id={$vendor->getId()}" class="btn btn-sm btn-primary">Редактировать</a>
+                <td style="white-space: nowrap;"><a href="/vendor/edit/{$vendor->getId()}" class="btn btn-sm btn-primary">Редактировать</a>
                     <form style="display:inline-block;" action="/vendor/delete" method="post"><input type="hidden" name="vendor_id" value="{$vendor->getId()}"><input type="submit" class="btn btn-sm btn-danger ml-2" value="Удалить"/></form></td>
             </tr>
         {/foreach}

@@ -32,11 +32,11 @@ class Router {
     }
 
     public function dispatch() {
-        $routes = $this->config->get('routes');
+//        $routes = $this->config->get('routes');
 
-        $url = $this->request->getUrl();
-        $route = $routes[$url] ?? null;
-
+//        $url = $this->request->getUrl();
+//        $route = $routes[$url] ?? null;
+        $route = $this->getRouteData();
         if (is_null($route)) {
 //            die('404');
             $this->notFound();
@@ -45,15 +45,79 @@ class Router {
         $controller = $this->container->get($route[0]);
 //        $this->container->getInjector()->callMethod($controller, $route[1]);
         $method = $route[1];
+        $params = $route[2] ?? [];
 
         try {
-            $route = new Route($controller, $method);
+            $route = new Route($controller, $method, $params);
         } catch (MethodDoesNotExistException $e) {
             $this->notFound();
         }
 
         return $route;
+    }
 
+    private function getRouteData() {
+        $routes = $this->getRoutes();
+        $url = $this->request->getUrl();
+
+        $route = $routes[$url] ?? null;
+
+        if (!is_null($route)) {
+            return $route;
+        }
+
+        foreach ($routes as $key => $route_data) {
+            $route_params = [];
+
+            $url_chunks = explode('/', $url);
+            $route_key_chunks = explode('/', $key);
+
+            if (count($url_chunks) != count($route_key_chunks)) {
+                continue;
+            }
+
+            for ($i = 0; $i < count($url_chunks); $i++) {
+                $url_chunk = $url_chunks[$i];
+                $route_key_chunk = $route_key_chunks[$i];
+
+                $match = $this->assertUrlAndRouteChunk($url_chunk, $route_key_chunk);
+
+                if (!match) {
+                    continue 2;
+                }
+
+                $param = $this->getRouteParam($url_chunk, $route_key_chunk);
+                $route_params = array_replace($route_params, $param);
+            }
+            $route = $route_data;
+            $route[] = $route_params;
+        }
+
+        return $route;
+    }
+
+    private function getRouteParam(string $url_chunk, string $route_chunk) {
+        $matches = [];
+
+        if (preg_match('/^{.+}$/im', $route_chunk, $matches) == false) {
+            return [];
+        }
+
+        $route_chunk = preg_replace('/[{}]/im', '', $route_chunk);
+
+        return [
+            $route_chunk => $url_chunk,
+        ];
+
+    }
+
+    private function assertUrlAndRouteChunk(string $url_chunk, string $route_chunk) {
+        $matches = [];
+        if (preg_match('/^{.+}$/im', $route_chunk, $matches) == false) {
+            return $url_chunk == $route_chunk;
+        }
+
+        return true;
     }
 
     private function getRoutes() {

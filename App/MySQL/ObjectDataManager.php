@@ -117,7 +117,7 @@ class ObjectDataManager implements IObjectDataManager
         return $this->insert($row);
     }
 
-    protected function update(ITableRow $row): ITableRow {
+    public function update(ITableRow $row): ITableRow {
         $data = [];
 
         $this->arrayDataManager->update($row->getTableName(), $data, [$row->getPrimaryKey() => $row->getPrimaryKeyValue()]);

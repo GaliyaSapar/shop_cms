@@ -8,6 +8,9 @@ use App\Http\Response;
 use App\Kernel;
 use App\Model\Cart;
 use App\Model\User;
+use App\MySQL\ArrayDataManager;
+use App\MySQL\Connection;
+use App\MySQL\ObjectDataManager;
 use App\Service\CartService;
 use App\Service\UserService;
 use Composer\Autoload\ClassLoader;
@@ -34,6 +37,27 @@ $container->addSingletone(UserService::class);
 //$container->addSingletone(Request::class, function () {
 //    return new Request();
 //});
+$container->addSingletone(Connection::class, function () use ($container) {
+    $config = $container->get(Config::class);
+    $host = $config->get('db.host');
+    $user_name = $config->get('db.user');
+    $user_pwd = $config->get('db.password');
+    $db_name = $config->get('db.db_name');
+
+    return new Connection($host, $db_name, $user_name, $user_pwd);
+});
+
+$container->addSingletone(ArrayDataManager::class, function() use ($container) {
+    $connection = $container->get(Connection::class);
+
+    return new ArrayDataManager($connection);
+});
+
+$container->addSingletone(ObjectDataManager::class, function() use ($container) {
+    $connection = $container->get(Connection::class);
+    $array_data_manager = $container->get(ArrayDataManager::class);
+    return new ObjectDataManager($connection, $array_data_manager);
+});
 
 $container->addSingletone(MySQL::class, function () use ($container) {
     $config = $container->get(Config::class);

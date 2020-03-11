@@ -4,7 +4,9 @@
 namespace App\Repository;
 
 
+use App\Model\AbstractEntity;
 use App\Model\Model;
+use App\Model\ModelAbstract;
 use App\Model\Product;
 
 /**
@@ -41,7 +43,7 @@ class ProductRepository extends RepositoryAbstract
 
             $product_ids = implode(',', $product_ids);
             $query = "SELECT * FROM products_folders WHERE product_id IN ($product_ids)";
-            $links = $this->mySQL->fetchAll($query, Model::class);
+            $links = $this->odm->fetchAll($query, Model::class);
 
 
             foreach ($links as $pair) {
@@ -60,4 +62,45 @@ class ProductRepository extends RepositoryAbstract
             }
         }
     }
+
+    public function save(ModelAbstract $product): ModelAbstract {
+        $data = [
+          'name' => $product->getName(),
+          'price' => $product->getPrice(),
+          'amount' => $product->getAmount(),
+          'description'=>$product->getDescription(),
+          'vendor_id'=>$product->getVendorId(),
+        ];
+
+        $product_id = $product->getId();
+        if ($product_id > 0) {
+            $this->odm->update('products', $data, [
+                'id' => $product_id
+            ]);
+            $this->removeLinksWithFolders($product);
+        } else {
+            $product_id = $this->odm->insert('products', $data);
+        }
+
+        $this->updateLinksWithFolders($product_id, $product->getFolderIds());
+
+        return $this->find($product_id);
+    }
+
+    private function removeLinksWithFolders(Product $product) {
+        $this->odm->delete('products_folders', [
+            'product_id' => $product->getId(),
+        ]);
+    }
+
+    private function updateLinksWithFolders(int $product_id, array $folder_ids) {
+
+        $folder_ids = array_unique($folder_ids);
+
+        foreach ($folder_ids as $folder_id) {
+            $this->odm->insert('products_folders', ['product_id' => $product_id, 'folder_id' => $folder_id]);
+        }
+    }
+
+
 }

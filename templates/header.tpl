@@ -43,8 +43,8 @@
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
                     <ul class="list-unstyled">
-                        <li><a href="/folder" class="text-white">Категории</a></li>
-                        <li><a href="/vendor" class="text-white">Производители</a></li>
+                        <li><a href="/folder/list" class="text-white">Категории</a></li>
+                        <li><a href="/vendor/list" class="text-white">Производители</a></li>
                     </ul>
                 </div>
             </div>

@@ -10,31 +10,43 @@ class Product extends AbstractEntity
     protected $table_name ='products';
     /**
      * @var int
+     *
+     * @DbPrimaryKey()
      */
     protected $id;
 
     /**
      * @var string
+     *
+     * @DbColumn(immutable)
      */
     protected $name;
 
     /**
      * @var float
+     *
+     * @DbColumn()
      */
     protected $price;
 
     /**
      * @var int
+     *
+     * @DbColumn()
      */
     protected $amount;
 
     /**
      * @var string
+     *
+     * @DbColumn()
      */
     protected  $description;
 
     /**
      * @var int
+     *
+     * @DbColumn()
      */
     protected  $vendor_id; // инициализация?
 

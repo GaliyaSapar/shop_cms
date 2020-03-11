@@ -63,33 +63,41 @@ class ProductRepository extends RepositoryAbstract
         }
     }
 
-    public function save(ModelAbstract $product): ModelAbstract {
-        $data = [
-          'name' => $product->getName(),
-          'price' => $product->getPrice(),
-          'amount' => $product->getAmount(),
-          'description'=>$product->getDescription(),
-          'vendor_id'=>$product->getVendorId(),
-        ];
+    public function save(AbstractEntity $product): AbstractEntity {
+//        $data = [
+//          'name' => $product->getName(),
+//          'price' => $product->getPrice(),
+//          'amount' => $product->getAmount(),
+//          'description'=>$product->getDescription(),
+//          'vendor_id'=>$product->getVendorId(),
+//        ];
+        /**
+         * @var $product Product
+         */
+        $entity = parent::save($product);
 
         $product_id = $product->getId();
-        if ($product_id > 0) {
-            $this->odm->update('products', $data, [
-                'id' => $product_id
-            ]);
-            $this->removeLinksWithFolders($product);
-        } else {
-            $product_id = $this->odm->insert('products', $data);
+//        if ($product_id > 0) {
+//            $this->odm->update('products', $data, [
+//                'id' => $product_id
+//            ]);
+//            $this->removeLinksWithFolders($product);
+//        } else {
+//            $product_id = $this->odm->insert('products', $data);
+//        }
+        if (!$product_id) {
+            $product_id = $entity->getPrimaryKeyValue();
         }
 
+        $this->removeLinksWithFolders($product_id);
         $this->updateLinksWithFolders($product_id, $product->getFolderIds());
 
         return $this->find($product_id);
     }
 
-    private function removeLinksWithFolders(Product $product) {
-        $this->odm->delete('products_folders', [
-            'product_id' => $product->getId(),
+    private function removeLinksWithFolders(int $product_id) {
+        $this->odm->getArrayDataManager()->delete('products_folders', [
+            'product_id' => $product_id
         ]);
     }
 
@@ -98,9 +106,8 @@ class ProductRepository extends RepositoryAbstract
         $folder_ids = array_unique($folder_ids);
 
         foreach ($folder_ids as $folder_id) {
-            $this->odm->insert('products_folders', ['product_id' => $product_id, 'folder_id' => $folder_id]);
+            $this->odm->getArrayDataManager()->insert('products_folders', ['product_id' => $product_id, 'folder_id' => $folder_id]);
         }
     }
-
 
 }

@@ -9,6 +9,7 @@ use App\Model\AbstractEntity;
 use App\Model\Model;
 use App\Model\ModelAbstract;
 use App\MySQL\ObjectDataManager;
+use App\Service\RequestService;
 use GivenClassNotImplementerITableRowException;
 use QueryException;
 
@@ -20,7 +21,7 @@ abstract class RepositoryAbstract
     protected $model;
 
     /**
-     * @var ObjectDataManager
+     * @var IObjectDataManager
      */
     protected $odm;
 
@@ -28,10 +29,10 @@ abstract class RepositoryAbstract
 
     /**
      * RepositoryAbstract constructor.
-     * @param ObjectDataManager $odm
+     * @param IObjectDataManager $odm
      * @throws \Exception
      */
-    public function __construct(ObjectDataManager $odm)
+    public function __construct(IObjectDataManager $odm)
     {
         if (!class_exists($this->model) || !in_array(AbstractEntity::class, class_parents($this->model))) {
             throw new \Exception('model should extends AbstractEntity');
@@ -39,6 +40,27 @@ abstract class RepositoryAbstract
 
         $this->table_name = $this->getTableName();
         $this->odm = $odm;
+    }
+
+    /**
+     * @param AbstractEntity $entity
+     * @return AbstractEntity
+     */
+    public function save(AbstractEntity $entity): AbstractEntity
+    {
+        /**
+         * @var $result AbstractEntity
+         */
+        $result = $this->odm->save($entity);
+    }
+
+    /**
+     * @param AbstractEntity $entity
+     * @return int
+     */
+    public function delete(AbstractEntity $entity): int
+    {
+        return $this->odm->delete($entity);
     }
 
     /**

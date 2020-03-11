@@ -48,4 +48,9 @@ interface IObjectDataManager
      * @return int
      */
     public function delete(ITableRow $row): int;
+
+    /**
+     * @return IArrayDataManager
+     */
+    public function getArrayDataManager(): IArrayDataManager;
 }

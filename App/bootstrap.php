@@ -47,6 +47,7 @@ $container->addSingletone(Connection::class, function () use ($container) {
     return new Connection($host, $db_name, $user_name, $user_pwd);
 });
 
+
 $container->addSingletone(ArrayDataManager::class, function() use ($container) {
     $connection = $container->get(Connection::class);
 

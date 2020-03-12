@@ -8,6 +8,7 @@ use App\Db\MySQL;
 use App\Model\AbstractEntity;
 use App\Model\Model;
 use App\Model\ModelAbstract;
+use App\MySQL\Interfaces\IObjectDataManager;
 use App\MySQL\ObjectDataManager;
 use App\Service\RequestService;
 use GivenClassNotImplementerITableRowException;

@@ -115,12 +115,12 @@
                 <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"  aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Фото товара</text></svg>
                 <div class="card-body">
                     <p class="card-text">{$product->getName()}</p>
-                    <p class="card-text"><a href="/product/view/{$product->getId()}">{$product->getName()}</a></p>
+                    <p class="card-text"><a href="/product/view/{$product.id}">{$product.name}</a></p>
                     <p>
                     <ul>
-                        <li>Кол-во товара: {$product->getAmount()}</li>
-                        {assign var=product_vendor_id value=$product->getVendorId()}
-                        <li>Производитель: {$vendors[$product_vendor_id]->getName()}</li>
+                        <li>Кол-во товара: {$product.amount}</li>
+                        {assign var=product_vendor_id value=$product.vendor_id}
+                        <li>Производитель: {$vendors[$product_vendor_id].name}</li>
                         <li>Категории: {foreach from=$product->getFolderIds() item=folder_id name=product_folder_ids}
                                 {$folders[$folder_id]->getName()}{if !$smarty.foreach.product_folder_ids.last}, {/if}{foreachelse}&ndash;{/foreach}</li>
                     </ul>
@@ -128,10 +128,10 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
                             {*								<button type="button" class="btn btn-sm btn-outline-secondary">View</button>*}
-                            <a href="/product/edit/{$product->getId()}" class="btn btn-sm btn-outline-secondary">Редактировать</a>
-                            <a href="/product/buy/{$product->getId()}" class="btn btn-sm btn-outline-secondary">Купить</a>
+                            <a href="/product/edit/{$product.id}" class="btn btn-sm btn-outline-secondary">Редактировать</a>
+                            <a href="/product/buy/{$product.id}" class="btn btn-sm btn-outline-secondary">Купить</a>
                         </div>
-                        <small class="text-muted">{$product->getPrice()}</small>
+                        <small class="text-muted">{$product.price}</small>
                     </div>
                 </div>
             </div>

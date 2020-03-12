@@ -37,6 +37,8 @@ class Router {
 //        $url = $this->request->getUrl();
 //        $route = $routes[$url] ?? null;
         $route = $this->getRouteData();
+        
+
         if (is_null($route)) {
 //            die('404');
             $this->notFound();
@@ -58,9 +60,13 @@ class Router {
 
     private function getRouteData() {
         $routes = $this->getRoutes();
+        
+        
         $url = $this->request->getUrl();
 
         $route = $routes[$url] ?? null;
+        
+        echo '<pre>'; var_dump($route); echo '</pre>';
 
         if (!is_null($route)) {
             return $route;
@@ -82,7 +88,7 @@ class Router {
 
                 $match = $this->assertUrlAndRouteChunk($url_chunk, $route_key_chunk);
 
-                if (!match) {
+                if (!$match) {
                     continue 2;
                 }
 
@@ -161,9 +167,6 @@ class Router {
 
                         $params[$key] = $value;
                     }
-
-
-
 
                     $routes[$params['url']] = [
                         $controller, $method->getName(),

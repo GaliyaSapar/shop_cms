@@ -1,9 +1,15 @@
 <?php
 
+use App\Controller\CartController;
+use App\Controller\FolderController;
+use App\Controller\ProductController;
+use App\Controller\UserController;
+use App\Controller\VendorController;
+
 return [
-    \App\Controller\ProductController::class,
-    \App\Controller\CartController::class,
-    \App\Controller\UserController::class,
-    \App\Controller\FolderController::class,
-    \App\Controller\VendorController::class,
+    ProductController::class,
+    CartController::class,
+    UserController::class,
+    FolderController::class,
+    VendorController::class,
 ];

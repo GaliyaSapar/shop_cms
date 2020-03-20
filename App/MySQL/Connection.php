@@ -60,7 +60,7 @@ class Connection implements IConnection
         if (!$this->connection) {
             throw new ConnectionException('MySQL connect error: (' . mysqli_connect_errno() . ') ' . mysqli_connect_error());
         }
-        mysqli_set_charset($this->connect, 'utf8');
+        mysqli_set_charset($this->connection, 'utf8');
 
     }
 

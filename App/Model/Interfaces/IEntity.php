@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Model;
+namespace App\Model\Interfaces;
 
 
 use App\MySQL\Interfaces\ITableRow;

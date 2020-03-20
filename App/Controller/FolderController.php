@@ -18,7 +18,7 @@ class FolderController extends ControllerAbstract
      * @param FolderRepository $folder_repository
      * @return Response
      *
-     * @Route(url='/folder/list')
+     * @Route(url="/folder/list")
      *
      * @throws GivenClassNotImplementerITableRowException
      * @throws QueryException
@@ -36,8 +36,8 @@ class FolderController extends ControllerAbstract
      * @param FolderRepository $folder_repository
      * @return Response
      *
-     * @Route(url='/folder/edit')
-     * @Route(url='/folder/edit/{folder_id}')
+     * @Route(url="/folder/edit")
+     * @Route(url="/folder/edit/{folder_id}")
      *
      * @throws GivenClassNotImplementerITableRowException
      * @throws QueryException
@@ -67,7 +67,7 @@ class FolderController extends ControllerAbstract
      * @param FolderRepository $folder_repository
      * @return Response
      *
-     * @Route(url='/folder/editing')
+     * @Route(url="/folder/editing")
      *
      * @throws GivenClassNotImplementerITableRowException
      * @throws QueryException
@@ -101,7 +101,7 @@ class FolderController extends ControllerAbstract
     /**
      * @param FolderRepository $folder_repository
      *
-     * @Route(url='/folder/delete')
+     * @Route(url="/folder/delete")
      *
      * @return Response
      *

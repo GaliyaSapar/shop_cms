@@ -25,7 +25,9 @@ class ProductController extends ControllerAbstract
      * @param VendorRepository $vendor_repository
      * @param FolderRepository $folder_repository
      *
+     * @Route(url="/")
      * @Route(url="/product/list")
+     *
      *
      * @return Response
      */
@@ -141,8 +143,8 @@ class ProductController extends ControllerAbstract
      * @param VendorRepository $vendor_repository
      * @param FolderRepository $folder_repository
      *
-     * @Route(url='/product/edit')
-     * @Route(url='/product/edit/{product_id}')
+     * @Route(url="/product/edit")
+     * @Route(url="/product/edit/{product_id}")
      *
      * @return Response
      */

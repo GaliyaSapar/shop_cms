@@ -16,7 +16,7 @@ class VendorController extends ControllerAbstract
     /**
      * @param VendorRepository $vendor_repository
      *
-     * @Route(url='/vendor/list')
+     * @Route(url="/vendor/list")
      *
      * @return Response
      */
@@ -32,8 +32,8 @@ class VendorController extends ControllerAbstract
     /**
      * @param VendorRepository $vendor_repository
      *
-     * @Route(url='/vendor/edit')
-     * @Route(url='/vendor/edit/{vendor_id}')
+     * @Route(url="/vendor/edit")
+     * @Route(url="/vendor/edit/{vendor_id}")
      *
      * @return Response
      */
@@ -61,7 +61,7 @@ class VendorController extends ControllerAbstract
     /**
      * @param VendorRepository $vendor_repository
      *
-     * @Route(url='/vendor/editing')
+     * @Route(url="/vendor/editing")
      *
      * @return Response
      */
@@ -97,7 +97,7 @@ class VendorController extends ControllerAbstract
     /**
      * @param VendorRepository $vendor_repository
      *
-     * @Route(url='/vendor/delete')
+     * @Route(url="/vendor/delete")
      *
      * @return Response
      */

@@ -66,7 +66,7 @@ class Router {
 
         $route = $routes[$url] ?? null;
         
-        echo '<pre>'; var_dump($route); echo '</pre>';
+        echo '<pre>'; var_dump($routes); echo '</pre>';
 
         if (!is_null($route)) {
             return $route;
@@ -163,7 +163,7 @@ class Router {
                         $key = $param_data[0];
                         $value = $param_data[1];
 
-                        $value = str_replace('\"', '', $value);
+                        $value = str_replace('"', '', $value);
 
                         $params[$key] = $value;
                     }

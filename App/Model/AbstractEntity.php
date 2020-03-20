@@ -4,6 +4,8 @@
 namespace App\Model;
 
 
+use App\Model\Interfaces\IEntity;
+
 class AbstractEntity implements IEntity
 {
     /**
